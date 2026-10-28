@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAA Master UDG</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                            700: '#a21caf',
+                            800: '#86198f',
+                            900: '#701a75',
+                            dark: '#2e1065',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0716;
+            color: #f3f4f6;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #a21caf;
+            border-radius: 4px;
+        }
+        .glass-card {
+            background: rgba(30, 15, 45, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(217, 70, 239, 0.2);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(217, 70, 239, 0.6);
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between custom-scrollbar">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-opacity-90 backdrop-blur-md bg-[#0f0716] border-b border-brand-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 to-pink-500 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-500/30">
+                        PAA
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-white block leading-none">Practica Conmigo</span>
+                        <span class="text-xs text-brand-500 font-medium tracking-wide">Unica y Especial para ti <3 </span>
+                    </div>
+                </div>
+                
+                <!-- Navigation Tabs -->
+                <nav class="flex space-x-1 sm:space-x-2">
+                    <button onclick="switchTab('library')" id="nav-library" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-white bg-brand-700/60 border border-brand-500/40">
+                        Formulario / Biblioteca
+                    </button>
+                    <button onclick="switchTab('minigames')" id="nav-minigames" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/5">
+                        Minijuegos
+                    </button>
+                    <button onclick="switchTab('simulator')" id="nav-simulator" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/5">
+                        Simulador PAA
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- ================= SECCIÓN 1: FORMULARIO / BIBLIOTECA ================= -->
+        <section id="section-library" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-brand-900/40 pb-5">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Formulario y Biblioteca Teórica</h1>
+                    <p class="text-gray-400 text-sm mt-1">Guía técnica extensiva con reglas, fórmulas y ejemplos explicados paso a paso para la PAA UDG.</p>
+                </div>
+                <!-- Sub-tabs por Materia -->
+                <div class="flex bg-brand-900/30 p-1 rounded-xl border border-brand-800/40 self-start md:self-auto">
+                    <button onclick="filterLibrary('math')" id="lib-filter-math" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-white bg-brand-600">Matemáticas</button>
+                    <button onclick="filterLibrary('spanish')" id="lib-filter-spanish" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-gray-400 hover:text-white">Español</button>
+                    <button onclick="filterLibrary('english')" id="lib-filter-english" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-gray-400 hover:text-white">Inglés</button>
+                </div>
+            </div>
+
+            <!-- Grid de Tarjetas de Estudio -->
+            <div id="library-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Se puebla dinámicamente -->
+            </div>
+        </section>
+
+        <!-- ================= SECCIÓN 2: MINIJUEGOS ================= -->
+        <section id="section-minigames" class="space-y-6 hidden">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-brand-900/40 pb-5">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Minijuegos de Práctica Entrenada</h1>
+                    <p class="text-gray-400 text-sm mt-1">Selecciona la materia para activar dinámicas de juego adaptadas al temario oficial.</p>
+                </div>
+                <!-- Filtro por Materia para Minijuegos -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterGames('math')" id="game-filter-math" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500">Matemáticas</button>
+                    <button onclick="filterGames('spanish')" id="game-filter-spanish" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500">Español</button>
+                    <button onclick="filterGames('english')" id="game-filter-english" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500">Inglés</button>
+                    <button onclick="filterGames('all')" id="game-filter-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white border border-brand-400">Todos / Mixtos</button>
+                </div>
+            </div>
+
+            <!-- Submenú de Selección de Juego u Opciones -->
+            <div id="game-selection-view" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tarjetas de minijuegos -->
+            </div>
+
+            <!-- VISTA ACTIVA DEL MINIJUEGO SELECCIONADO -->
+            <div id="active-game-view" class="hidden glass-card rounded-2xl p-6 sm:p-8 max-w-3xl mx-auto border border-brand-500/30">
+                <!-- Header del juego -->
+                <div class="flex items-center justify-between border-b border-brand-800/50 pb-4 mb-6">
+                    <div>
+                        <span id="game-materia-tag" class="text-xs uppercase font-bold tracking-wider px-2.5 py-1 rounded bg-brand-900/80 text-brand-300 border border-brand-700/50">Materia</span>
+                        <h2 id="game-title" class="text-xl sm:text-2xl font-bold text-white mt-2">Título del Juego</h2>
+                    </div>
+                    <button onclick="closeActiveGame()" class="text-gray-400 hover:text-white text-sm font-semibold bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition-all">
+                        Cerrar Juego
+                    </button>
+                </div>
+
+                <!-- Configuración Pre-Juego -->
+                <div id="game-config-box" class="space-y-6 py-4">
+                    <p id="game-description" class="text-gray-300 text-sm leading-relaxed">Descripción del minijuego y sus objetivos.</p>
+                    <div class="bg-black/30 p-4 rounded-xl border border-white/5 space-y-3">
+                        <label class="block text-sm font-semibold text-gray-200">Modo de Tiempo:</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center space-x-2 text-sm text-gray-300 cursor-pointer">
+                                <input type="radio" name="game-timer-opt" value="none" checked class="accent-brand-500">
+                                <span>Sin Tiempo (Practicar a tu ritmo)</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-300 cursor-pointer">
+                                <input type="radio" name="game-timer-opt" value="timed" class="accent-brand-500">
+                                <span>Con Tiempo (30 segs por pregunta)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button onclick="startGameEngine()" class="w-full py-3.5 bg-gradient-to-r from-brand-600 to-pink-600 hover:from-brand-500 hover:to-pink-500 text-white font-bold rounded-xl shadow-lg shadow-brand-600/30 transition-all">
+                        Iniciar Minijuego
+                    </button>
+                </div>
+
+                <!-- Pantalla del Juego en Ejecución -->
+                <div id="game-play-box" class="hidden space-y-6">
+                    <div class="flex items-center justify-between text-xs sm:text-sm font-semibold text-gray-400 bg-black/40 px-4 py-2.5 rounded-xl border border-white/5">
+                        <span id="game-progress-indicator">Pregunta 1 de 10</span>
+                        <span id="game-timer-display" class="text-brand-400 font-mono font-bold hidden">Tiempo: --</span>
+                        <span id="game-score-count" class="text-green-400">Puntaje: 0</span>
+                    </div>
+
+                    <div id="game-interactive-container" class="space-y-4">
+                        <!-- El contenido interactivo específico de cada minijuego se renderiza aquí -->
+                    </div>
+
+                    <div id="game-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium border">
+                        <!-- Retroalimentación tras responder -->
+                    </div>
+
+                    <button id="game-next-btn" onclick="nextGameQuestion()" class="hidden w-full py-3 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl transition-all">
+                        Siguiente Pregunta
+                    </button>
+                </div>
+
+                <!-- Pantalla de Resultados del Juego -->
+                <div id="game-results-box" class="hidden text-center space-y-6 py-6">
+                    <h3 class="text-2xl font-bold text-white">¡Minijuego Completado!</h3>
+                    <div class="bg-brand-900/30 p-6 rounded-2xl border border-brand-800/60 max-w-sm mx-auto">
+                        <p class="text-gray-400 text-sm">Puntaje Final</p>
+                        <p id="game-final-score" class="text-4xl font-black text-brand-400 mt-1">0 / 0</p>
+                        <p id="game-performance-text" class="text-xs text-gray-300 mt-2">¡Sigue practicando para perfeccionar!</p>
+                    </div>
+                    <div class="flex gap-3 justify-center">
+                        <button onclick="startGameEngine()" class="px-6 py-2.5 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-500">Reiniciar</button>
+                        <button onclick="closeActiveGame()" class="px-6 py-2.5 bg-white/10 text-gray-300 rounded-xl font-semibold hover:bg-white/20">Salir</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECCIÓN 3: SIMULADOR PAA ================= -->
+        <section id="section-simulator" class="space-y-6 hidden">
+            <div class="border-b border-brand-900/40 pb-5">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Simulador de Examen PAA UDG</h1>
+                <p class="text-gray-400 text-sm mt-1">Prueba real estandarizada con reactivos tipo examen y cronómetro unificado.</p>
+            </div>
+
+            <!-- Panel Inicial Configuración Examen -->
+            <div id="sim-start-panel" class="glass-card rounded-2xl p-6 sm:p-10 max-w-2xl mx-auto space-y-6 border border-brand-500/30">
+                <div class="space-y-2 text-center">
+                    <h2 class="text-2xl font-bold text-white">Configuración del Simulador</h2>
+                    <p class="text-sm text-gray-300">El examen PAA real evalúa Aptitud Matemática, Lectura y Lenguaje en Español e Inglés.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-200 mb-2">Selecciona la Modalidad:</label>
+                        <select id="sim-mode-select" class="w-full bg-black/50 border border-brand-700/60 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500">
+                            <option value="full">Examen Completo PAA (50 Reactivos - 45 Minutos Fijo)</option>
+                            <option value="math">Sección Matemáticas Solamente (20 Reactivos)</option>
+                            <option value="spanish">Sección Español Solamente (15 Reactivos)</option>
+                            <option value="english">Sección Inglés Solamente (15 Reactivos)</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-brand-900/20 p-4 rounded-xl border border-brand-800/40 space-y-2 text-xs text-gray-300">
+                        <p class="font-bold text-brand-300 text-sm">Instrucciones Importantes:</p>
+                        <ul class="list-disc list-inside space-y-1 text-gray-300">
+                            <li>El tiempo inicia inmediatamente al presionar "Comenzar Examen".</li>
+                            <li>Puedes navegar libremente entre preguntas antes de finalizar.</li>
+                            <li>Al terminar recibirás el desglose completo de tu puntaje y la justificación paso a paso de cada respuesta.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <button onclick="startSimulator()" class="w-full py-4 bg-gradient-to-r from-brand-600 to-pink-600 hover:from-brand-500 hover:to-pink-500 text-white font-extrabold rounded-xl text-lg shadow-xl shadow-brand-600/30 transition-all">
+                    Comenzar Examen
+                </button>
+            </div>
+
+            <!-- Vista del Examen en Curso -->
+            <div id="sim-exam-panel" class="hidden space-y-6">
+                <!-- Barra Superior con Cronómetro y Navegación -->
+                <div class="glass-card rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-brand-500/40 sticky top-20 z-30">
+                    <div class="flex items-center gap-4">
+                        <span class="text-sm font-bold text-gray-300">Reactivo: <span id="sim-current-index-text" class="text-brand-400 text-base">1</span> / <span id="sim-total-count-text">50</span></span>
+                        <span id="sim-subject-badge" class="text-xs font-semibold px-2.5 py-0.5 rounded bg-brand-900 text-brand-300 border border-brand-700">Matemáticas</span>
+                    </div>
+
+                    <div class="flex items-center gap-6">
+                        <div class="text-right">
+                            <span class="text-xs text-gray-400 block">Tiempo Restante</span>
+                            <span id="sim-timer-clock" class="text-xl font-mono font-black text-pink-400">45:00</span>
+                        </div>
+                        <button onclick="confirmFinishSim()" class="px-4 py-2 bg-red-600/80 hover:bg-red-600 text-white text-xs font-bold rounded-lg transition-all">
+                            Finalizar Examen
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <!-- Pregunta Actual -->
+                    <div class="lg:col-span-3 glass-card rounded-2xl p-6 sm:p-8 space-y-6 border border-brand-500/20">
+                        <div id="sim-question-text" class="text-base sm:text-lg font-medium text-white leading-relaxed">
+                            Cargando pregunta...
+                        </div>
+
+                        <div id="sim-options-container" class="space-y-3 pt-2">
+                            <!-- Opciones Múltiples -->
+                        </div>
+
+                        <div class="flex justify-between items-center pt-6 border-t border-brand-900/50">
+                            <button onclick="navigateSimQuestion(-1)" id="sim-prev-btn" class="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-gray-300 text-sm font-semibold rounded-xl">
+                                Anterior
+                            </button>
+                            <button onclick="navigateSimQuestion(1)" id="sim-next-btn" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold rounded-xl">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Panel Lateral de Navegación Rápida -->
+                    <div class="glass-card rounded-2xl p-5 border border-brand-500/20 space-y-4">
+                        <h3 class="text-sm font-bold text-gray-200">Mapa de Reactivos</h3>
+                        <div id="sim-grid-nav" class="grid grid-cols-5 gap-2 max-h-80 overflow-y-auto custom-scrollbar p-1">
+                            <!-- Botones numéricos -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vista de Resultados del Simulador -->
+            <div id="sim-results-panel" class="hidden space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 border border-brand-500/40 text-center space-y-4">
+                    <h2 class="text-3xl font-extrabold text-white">Resultado Global del Simulador</h2>
+                    <div class="flex justify-center items-center gap-8 py-4">
+                        <div class="bg-brand-900/40 border border-brand-700/50 p-6 rounded-2xl min-w-[160px]">
+                            <p class="text-xs text-gray-400 font-medium">Aciertos Totales</p>
+                            <p id="sim-score-total" class="text-4xl font-black text-brand-400 mt-1">0 / 50</p>
+                        </div>
+                        <div class="bg-brand-900/40 border border-brand-700/50 p-6 rounded-2xl min-w-[160px]">
+                            <p class="text-xs text-gray-400 font-medium">Porcentaje</p>
+                            <p id="sim-score-percent" class="text-4xl font-black text-pink-400 mt-1">0%</p>
+                        </div>
+                    </div>
+                    <button onclick="resetSimulator()" class="px-6 py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl transition-all">
+                        Realizar Nuevo Examen
+                    </button>
+                </div>
+
+                <!-- Revisión Detallada Pregunta por Pregunta -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-white">Revisión Detallada de Respuestas</h3>
+                    <div id="sim-review-list" class="space-y-4">
+                        <!-- Lista de revisión paso a paso -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Extenso para Fichas de la Biblioteca -->
+    <div id="library-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-card bg-[#150a21] border border-brand-500/50 rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-brand-900/60 flex items-center justify-between bg-brand-950/40">
+                <div>
+                    <span id="modal-subject-tag" class="text-xs uppercase font-bold px-2.5 py-0.5 rounded bg-brand-900 text-brand-300 border border-brand-700">Materia</span>
+                    <h2 id="modal-title" class="text-2xl font-black text-white mt-1">Título de la Ficha</h2>
+                </div>
+                <button onclick="closeLibraryModal()" class="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-all text-lg font-bold">
+                    ✕
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="p-6 sm:p-8 overflow-y-auto custom-scrollbar space-y-6 text-gray-200" id="modal-body-content">
+                <!-- Contenido extenso inyectado dinámicamente -->
+            </div>
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-brand-900/60 bg-brand-950/40 text-right">
+                <button onclick="closeLibraryModal()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl text-sm">
+                    Entendido / Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación Generico (Reemplazo de alert/confirm) -->
+    <div id="custom-alert-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-card bg-[#180b26] border border-brand-500/50 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <h3 id="alert-modal-title" class="text-lg font-bold text-white">Atención</h3>
+            <p id="alert-modal-msg" class="text-sm text-gray-300">Mensaje de alerta.</p>
+            <div class="flex justify-end gap-3 pt-2" id="alert-modal-actions">
+                <button onclick="closeAlertModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-lg text-sm">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Base y Datos Completa -->
+    <script>
+        /* ================= BANCO DE DATOS: BIBLIOTECA EXTENSA ================= */
+        const libraryData = [
+            // --- MATEMÁTICAS (29 Fórmulas / Conceptos Oficiales PAA UDG) ---
+            {
+                id: 'm1',
+                subject: 'math',
+                title: 'Área de Figuras Planas',
+                summary: 'Fórmulas para Triángulo, Cuadrado, Rectángulo y Círculo.',
+                theory: 'El área mide la superficie encerrada por el límite de una figura bidimensional. Para la PAA es crucial dominar las áreas geométricas fundamentales.',
+                rules: [
+                    'Triángulo: A = (Base × Altura) / 2',
+                    'Cuadrado: A = Lado²',
+                    'Rectángulo: A = Base × Altura',
+                    'Círculo: A = π × r²'
+                ],
+                examples: [
+                    {
+                        problem: 'Un triángulo tiene una base de 12 cm y una altura de 7 cm. ¿Cuál es su área?',
+                        steps: [
+                            'Fórmula: A = (b × h) / 2',
+                            'Sustitución: A = (12 × 7) / 2',
+                            'Cálculo: A = 84 / 2 = 42 cm²'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm2',
+                subject: 'math',
+                title: 'Perímetros',
+                summary: 'Suma de los lados de un polígono y longitud de circunferencia.',
+                theory: 'El perímetro es la longitud total del contorno de una figura plana.',
+                rules: [
+                    'Polígonos: Suma directa de las longitudes de todos sus lados.',
+                    'Circunferencia: P = 2 × π × r (o P = π × d, donde d es el diámetro).'
+                ],
+                examples: [
+                    {
+                        problem: 'Calcular el perímetro de un Círculo con radio r = 5 cm (usa π ≈ 3.14).',
+                        steps: [
+                            'Fórmula: P = 2 × π × r',
+                            'Sustitución: P = 2 × 3.14 × 5',
+                            'Resultado: P = 31.4 cm'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm3',
+                subject: 'math',
+                title: 'Triángulos y Teorema de Pitágoras',
+                summary: 'Propiedades de ángulos internos y relación de lados en triángulos rectángulos.',
+                theory: 'En todo triángulo, la suma de los ángulos internos es siempre igual a 180°. En todo triángulo rectángulo (con un ángulo de 90°), la suma de los cuadrados de los catetos es igual al cuadrado de la hipotenusa.',
+                rules: [
+                    'Suma de ángulos: α + β + γ = 180°',
+                    'Teorema de Pitágoras: a² + b² = c² (donde c es la hipotenusa)'
+                ],
+                examples: [
+                    {
+                        problem: 'Un triángulo rectángulo tiene catetos de a = 6 y b = 8. Hallar la hipotenusa c.',
+                        steps: [
+                            'c² = 6² + 8²',
+                            'c² = 36 + 64 = 100',
+                            'c = √100 = 10'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm4',
+                subject: 'math',
+                title: 'Razones Trigonométricas Básicas',
+                summary: 'Seno, Coseno y Tangente en triángulos rectángulos.',
+                theory: 'Relaciones numéricas entre las longitudes de dos lados de un triángulo rectángulo en función de uno de sus ángulos agudos (θ).',
+                rules: [
+                    'Sen(θ) = Cateto Opuesto / Hipotenusa',
+                    'Cos(θ) = Cateto Adyacente / Hipotenusa',
+                    'Tan(θ) = Cateto Opuesto / Cateto Adyacente'
+                ],
+                examples: [
+                    {
+                        problem: 'Si el cateto opuesto vale 3 y la hipotenusa vale 5, ¿cuánto vale Sen(θ)?',
+                        steps: [
+                            'Sen(θ) = 3 / 5 = 0.6'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm5',
+                subject: 'math',
+                title: 'Volumen y Superficie de Cilindros',
+                summary: 'Capacidad y área total de cuerpos redondos.',
+                theory: 'Un cilindro es un cuerpo geométrico generado por un rectángulo al girar sobre uno de sus lados.',
+                rules: [
+                    'Volumen: V = Área de la base × Altura = (π × r²) × h',
+                    'Área Lateral: AL = 2 × π × r × h'
+                ],
+                examples: [
+                    {
+                        problem: 'Un cilindro tiene r = 3 cm y h = 10 cm. Determinar su volumen en función de π.',
+                        steps: [
+                            'V = π × (3)² × 10',
+                            'V = π × 9 × 10 = 90π cm³'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm6',
+                subject: 'math',
+                title: 'Regla de Tres Directa e Inversa',
+                summary: 'Resolución de problemas de proporcionalidad.',
+                theory: 'La regla de tres permite calcular un valor desconocido relacionando tres valores conocidos.',
+                rules: [
+                    'Directa (si una variable sube, la otra sube): x = (B × C) / A',
+                    'Inversa (si una variable sube, la otra baja): x = (A × B) / C'
+                ],
+                examples: [
+                    {
+                        problem: 'Si 4 obreros construyen una barda en 12 horas, ¿cuánto tardarán 8 obreros? (Inversa)',
+                        steps: [
+                            'Relación inversa: (4 obreros × 12 horas) / 8 obreros',
+                            'x = 48 / 8 = 6 horas'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm7',
+                subject: 'math',
+                title: 'Porcentajes y Aumentos/Descuentos',
+                summary: 'Cálculo de fracciones decimales sobre una cantidad base.',
+                theory: 'Un porcentaje representa una fracción de 100.',
+                rules: [
+                    'Cantidad final con Descuento del D%: N_final = N × (1 - D/100)',
+                    'Cantidad final con Aumento del A%: N_final = N × (1 + A/100)'
+                ],
+                examples: [
+                    {
+                        problem: 'Un artículo cuesta $800 y tiene un 20% de descuento. ¿Cuál es el precio final?',
+                        steps: [
+                            'Descuento: 800 × 0.20 = $160',
+                            'Precio final: 800 - 160 = $640'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm8',
+                subject: 'math',
+                title: 'MCD y MCM',
+                summary: 'Máximo Común Divisor y Mínimo Común Múltiplo.',
+                theory: 'El MCD es el divisor más grande que comparten dos o más números. El MCM es el múltiplo más pequeño que comparten.',
+                rules: [
+                    'Descomposición simultánea en factores primos.',
+                    'MCD: Multiplica únicamente los primos que dividan a TODOS los números al mismo tiempo.',
+                    'MCM: Multiplica TODOS los factores primos hasta llevar cada número a 1.'
+                ],
+                examples: [
+                    {
+                        problem: 'Calcular el MCM de 12 y 18.',
+                        steps: [
+                            'Factores de 12: 2² × 3',
+                            'Factores de 18: 2 × 3²',
+                            'MCM = toma mayores exponentes: 2² × 3² = 4 × 9 = 36'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm9',
+                subject: 'math',
+                title: 'Jerarquía de Operaciones (PEMDAS)',
+                summary: 'Orden estricto de resolución algebraica.',
+                theory: 'Garantiza la unicidad de resultado en operaciones combinadas.',
+                rules: [
+                    '1° Paréntesis y agrupaciones',
+                    '2° Exponentes y Radicación',
+                    '3° Multiplicación y División (de izquierda a derecha)',
+                    '4° Suma y Resta (de izquierda a derecha)'
+                ],
+                examples: [
+                    {
+                        problem: 'Resolver: 5 + 3 × (8 - 2²)',
+                        steps: [
+                            'Paréntesis interno exponente: 2² = 4 -> (8 - 4) = 4',
+                            'Multiplicación: 3 × 4 = 12',
+                            'Suma final: 5 + 12 = 17'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm10',
+                subject: 'math',
+                title: 'Leyes de los Exponentes',
+                summary: 'Reglas para simplificar potencias.',
+                theory: 'Operaciones con bases elevadas a exponentes reales.',
+                rules: [
+                    'Producto: aᵐ × aⁿ = aᵐ⁺ⁿ',
+                    'Cociente: aᵐ / aⁿ = aᵐ⁻ⁿ',
+                    'Potencia de potencia: (aᵐ)ⁿ = aᵐ*ⁿ',
+                    'Exponente cero: a⁰ = 1 (a ≠ 0)',
+                    'Exponente negativo: a⁻ⁿ = 1 / aⁿ'
+                ],
+                examples: [
+                    {
+                        problem: 'Simplificar: (x³ × x⁵) / x²',
+                        steps: [
+                            'Numerador: x³⁺⁵ = x⁸',
+                            'División: x⁸ / x² = x⁸⁻² = x⁶'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm11',
+                subject: 'math',
+                title: 'Radicales y Exponentes Fraccionarios',
+                summary: 'Conversión de raíces a potencias y simplificación.',
+                theory: 'Una raíz n-ésima de una potencia equivale a un exponente fraccionario.',
+                rules: [
+                    ' Conversión: ⁿ√(aᵐ) = aᵐ/ⁿ',
+                    ' Multiplicación de raíces del mismo índice: ⁿ√a × ⁿ√b = ⁿ√(a × b)'
+                ],
+                examples: [
+                    {
+                        problem: 'Expresar √x³ en forma de exponente fraccionario.',
+                        steps: [
+                            'El índice de la raíz cuadrada es 2 y la potencia es 3.',
+                            'Resultado: x³/²'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm12',
+                subject: 'math',
+                title: 'Promedio, Media, Moda y Mediana',
+                summary: 'Medidas de tendencia central.',
+                theory: 'Estadística descriptiva básica evaluada frecuentemente en la PAA.',
+                rules: [
+                    'Promedio / Media: Suma de todos los datos dividida entre el número de datos.',
+                    'Mediana: Valor central tras ordenar los datos de menor a mayor.',
+                    'Moda: El valor que aparece con mayor frecuencia.'
+                ],
+                examples: [
+                    {
+                        problem: 'Hallar el promedio de los datos: 4, 8, 6, 10, 12.',
+                        steps: [
+                            'Suma: 4 + 8 + 6 + 10 + 12 = 40',
+                            'Número de elementos: 5',
+                            'Promedio: 40 / 5 = 8'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm13',
+                subject: 'math',
+                title: 'Ecuaciones de Primer Grado',
+                summary: 'Despeje de una incógnita lineal.',
+                theory: 'Igualdades matemáticas con una variable elevada a la primera potencia.',
+                rules: [
+                    'Lo que está sumando pasa restando.',
+                    'Lo que está multiplicando pasa dividiendo con su mismo signo.'
+                ],
+                examples: [
+                    {
+                        problem: 'Resolver: 4x - 7 = 13',
+                        steps: [
+                            '4x = 13 + 7',
+                            '4x = 20',
+                            'x = 20 / 4 = 5'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm14',
+                subject: 'math',
+                title: 'Sistemas de Ecuaciones 2x2',
+                summary: 'Métodos de Sustitución, Reducción e Igualación.',
+                theory: 'Conjunto de dos ecuaciones con dos incógnitas cuyo punto en común representa la solución.',
+                rules: [
+                    'Reducción: Sumar o restar las ecuaciones para eliminar una variable.',
+                    'Sustitución: Despejar una variable de una ecuación y colocarla en la otra.'
+                ],
+                examples: [
+                    {
+                        problem: 'Resolver x + y = 10 y x - y = 4.',
+                        steps: [
+                            'Sumamos ambas ecuaciones: (x + x) + (y - y) = 10 + 4',
+                            '2x = 14  =>  x = 7',
+                            'Sustituimos x: 7 + y = 10  =>  y = 3'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm15',
+                subject: 'math',
+                title: 'Desigualdades e Inecuaciones',
+                summary: 'Despeje con intervalos y cambio de sentido.',
+                theory: 'Expresiones que utilizan símbolos <, >, ≤, ≥.',
+                rules: [
+                    'REGLA DE ORO: Al multiplicar o dividir ambos lados por un número NEGATIVO, el sentido de la desigualdad SE INVIERTE.'
+                ],
+                examples: [
+                    {
+                        problem: 'Resolver: -3x < 12',
+                        steps: [
+                            'Dividimos entre -3 e invertimos la desigualdad:',
+                            'x > 12 / (-3)',
+                            'x > -4'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm16',
+                subject: 'math',
+                title: 'Factorización de Polinomios',
+                summary: 'Factor común, Diferencia de cuadrados y Trinometría.',
+                theory: 'Transformar una suma o resta de términos algebraicos en un producto de factores.',
+                rules: [
+                    'Factor Común: ax + ay = a(x + y)',
+                    'Diferencia de Cuadrados: a² - b² = (a - b)(a + b)',
+                    'Trinomio Cuadrado Perfecto: a² + 2ab + b² = (a + b)²'
+                ],
+                examples: [
+                    {
+                        problem: 'Factorizar: x² - 16',
+                        steps: [
+                            'Es una diferencia de cuadrados perfectos (√x² = x, √16 = 4)',
+                            'Resultado: (x - 4)(x + 4)'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm17',
+                subject: 'math',
+                title: 'Valor Numérico de una Expresión',
+                summary: 'Evaluación de funciones para un valor dado.',
+                theory: 'Sustituir las variables por números dados y resolver la aritmética resultante.',
+                rules: [
+                    'Respetar el orden de signos y jerarquía al sustituir.'
+                ],
+                examples: [
+                    {
+                        problem: 'Hallar el valor de f(x) = 2x² - 3x + 5 cuando x = -2.',
+                        steps: [
+                            'f(-2) = 2(-2)² - 3(-2) + 5',
+                            'f(-2) = 2(4) + 6 + 5',
+                            'f(-2) = 8 + 6 + 5 = 19'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm18',
+                subject: 'math',
+                title: 'Probabilidad Clásica',
+                summary: 'Cálculo de probabilidad de eventos simples.',
+                theory: 'Medida numérica de la posibilidad de que ocurra un evento.',
+                rules: [
+                    'P(A) = (Número de Casos Favorables) / (Número de Casos Posibles Totales)',
+                    'El valor siempre se encuentra entre 0 y 1 (o 0% y 100%).'
+                ],
+                examples: [
+                    {
+                        problem: '¿Cuál es la probabilidad de obtener un número mayor a 4 al lanzar un dado de 6 caras?',
+                        steps: [
+                            'Casos favorables (5 y 6): 2 casos',
+                            'Casos totales: 6',
+                            'P = 2 / 6 = 1 / 3 ≈ 33.3%'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm19',
+                subject: 'math',
+                title: 'Permutaciones (El Orden Importa)',
+                summary: 'Arreglos ordenados de elementos.',
+                theory: 'Agrupación donde sí importa la posición o el orden en que se colocan los elementos.',
+                rules: [
+                    'P(n, r) = n! / (n - r)!'
+                ],
+                examples: [
+                    {
+                        problem: 'De un grupo de 4 personas, ¿de cuántas formas se pueden otorgar 1er y 2do lugar?',
+                        steps: [
+                            'n = 4, r = 2',
+                            'P(4, 2) = 4! / (4 - 2)! = (4 × 3 × 2 × 1) / (2 × 1) = 12 formas'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm20',
+                subject: 'math',
+                title: 'Combinaciones (El Orden NO Importa)',
+                summary: 'Selección de elementos sin considerar su orden.',
+                theory: 'Selección de un subconjunto de elementos donde el orden de selección es irrelevante.',
+                rules: [
+                    'C(n, r) = n! / [r! × (n - r)!]'
+                ],
+                examples: [
+                    {
+                        problem: '¿Cuántas parejas distintas se pueden formar con 4 personas?',
+                        steps: [
+                            'n = 4, r = 2',
+                            'C(4, 2) = 4! / [2! × (4 - 2)!] = 24 / [2 × 2] = 24 / 4 = 6 combinaciones'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm21',
+                subject: 'math',
+                title: 'Distancia entre Dos Puntos',
+                summary: 'Geometría analítica en el plano cartesiano.',
+                theory: 'Longitud del segmento que une dos puntos A(x₁, y₁) y B(x₂, y₂). Derivado de Pitágoras.',
+                rules: [
+                    'd = √[ (x₂ - x₁)² + (y₂ - y₁)² ]'
+                ],
+                examples: [
+                    {
+                        problem: 'Calcular la distancia entre A(1, 2) y B(4, 6).',
+                        steps: [
+                            'd = √[ (4 - 1)² + (6 - 2)² ]',
+                            'd = √[ (3)² + (4)² ] = √[ 9 + 16 ] = √25 = 5 unidades'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm22',
+                subject: 'math',
+                title: 'Punto Medio de un Segmento',
+                summary: 'Coordenadas del centro de un segmento.',
+                theory: 'Punto exacto que divide a un segmento de recta en dos partes de igual longitud.',
+                rules: [
+                    'Pm = ( (x₁ + x₂) / 2 , (y₁ + y₂) / 2 )'
+                ],
+                examples: [
+                    {
+                        problem: 'Hallar el punto medio entre P(2, 8) y Q(6, 4).',
+                        steps: [
+                            'x_m = (2 + 6) / 2 = 8 / 2 = 4',
+                            'y_m = (8 + 4) / 2 = 12 / 2 = 6',
+                            'Punto Medio: (4, 6)'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm23',
+                subject: 'math',
+                title: 'Pendiente de una Recta (m)',
+                summary: 'Inclinación de la recta en el plano.',
+                theory: 'Razón de cambio entre la variación vertical (y) y la variación horizontal (x).',
+                rules: [
+                    'm = (y₂ - y₁) / (x₂ - x₁)'
+                ],
+                examples: [
+                    {
+                        problem: 'Hallar la pendiente de la recta que pasa por (1, 3) y (3, 7).',
+                        steps: [
+                            'm = (7 - 3) / (3 - 1) = 4 / 2 = 2'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm24',
+                subject: 'math',
+                title: 'Ecuación de la Recta (Punto-Pendiente)',
+                summary: 'Representación algebraica lineal.',
+                theory: 'Forma canónica de la recta en función de su pendiente m y su intersección con el eje Y (b).',
+                rules: [
+                    'Forma pendiente-intersección: y = mx + b',
+                    'Forma punto-pendiente: y - y₁ = m(x - x₁)'
+                ],
+                examples: [
+                    {
+                        problem: 'Escribir la ecuación de la recta con m = 3 y que pasa por (0, 5).',
+                        steps: [
+                            'Como la intersección b es 5, sustituimos directamente:',
+                            'y = 3x + 5'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'm25',
+                subject: 'math',
+                title: 'Ecuación de la Circunferencia',
+                summary: 'Lugar geométrico con centro en el origen y fuera de él.',
+                theory: 'Todos los puntos que equidistan de un centro fijo (h, k) a una distancia constante r.',
+                rules: [
+                    'Centro en el origen (0,0): x² + y² = r²',
+                    'Centro fuera del origen (h,k): (x - h)² + (y - k)² = r²'
+                ],
+                examples: [
+                    {
+                        problem: 'Determinar el radio de la circunferencia x² + y² = 49.',
+                        steps: [
+                            'r² = 49',
+                            'r = √49 = 7'
+                        ]
+                    }
+                ]
+            },
+
+            // --- ESPAÑOL ---
+            {
+                id: 's1',
+                subject: 'spanish',
+                title: 'Comprensión Lectora e Inferencia Textual',
+                summary: 'Estrategias para identificar la idea central e inferencias válidas.',
+                theory: 'La PAA evalúa la capacidad de comprender textos complejos académicos, identificar la intención del autor, la tesis principal y distinguir hechos concretos de inferencias.',
+                rules: [
+                    'Idea Central: El núcleo conceptual que unifica todo el texto.',
+                    'Inferencia Válida: Conclusión lógica respaldada directamente por el texto, sin asumir información no provista.',
+                    'Tono del Autor: Objetivo, crítico, persuasivo o reflexivo.'
+                ],
+                examples: [
+                    {
+                        problem: 'Texto: "La rápida expansión de las ciudades ha reducido las áreas verdes, incrementando la temperatura media urbana en los últimos diez años." ¿Qué se infiere?',
+                        steps: [
+                            'Inferencia correcta: La urbanización desmedida influye directamente en el microclima de la ciudad.',
+                            'Explicación: El texto vincula la pérdida de áreas verdes con el incremento directo de la temperatura.'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 's2',
+                subject: 'spanish',
+                title: 'Analogías Verbales',
+                summary: 'Identificación de relaciones conceptuales abstractas.',
+                theory: 'Las analogías miden la habilidad para reconocer la relación lógica existente entre un par de palabras modelo y aplicar esa misma relación a otro par.',
+                rules: [
+                    'Paso 1: Establece una oración concreta con el par base: "A es a B como..."',
+                    'Paso 2: Identifica el tipo de relación (Causa-Efecto, Parte-Todo, Instrumento-Sujeto, Sinonimia/Antonimia).',
+                    'Paso 3: Aplica estrictamente el mismo orden semántico a las opciones.'
+                ],
+                examples: [
+                    {
+                        problem: 'PINCEL : PINTOR ::',
+                        steps: [
+                            'Relación: El PINCEL es el instrumento de trabajo utilizado por el PINTOR.',
+                            'Opción correcta: BISTURÍ : CIRUJANO'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 's3',
+                subject: 'spanish',
+                title: 'Conectores Textuales y Cohesión',
+                summary: 'Uso de nexos gramaticales sintácticos.',
+                theory: 'Los conectores enlazan oraciones para dar coherencia y fluidez al discurso argumentativo.',
+                rules: [
+                    'Causales: porque, puesto que, ya que.',
+                    'Adversativos (Oposición): sin embargo, no obstante, pero.',
+                    'Consecutivos: por lo tanto, en consecuencia, por ende.'
+                ],
+                examples: [
+                    {
+                        problem: 'Completar: "Estudió con mucha dedicación; __________, no logró obtener la puntuación máxima."',
+                        steps: [
+                            'Existe una oposición lógica entre el esfuerzo y el resultado.',
+                            'Conector adecuado: "sin embargo" o "no obstante".'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 's4',
+                subject: 'spanish',
+                title: 'Errores Gramaticales Comunes en la PAA',
+                summary: 'Sintaxis, concordancia y redundancia.',
+                theory: 'La sección de redacción de la PAA evalúa la corrección de errores sintácticos habituales.',
+                rules: [
+                    'Concordancia de Número/Género: El sujeto debe coincidir en número con el verbo. "Hubo personas" (Correcto) / "Hubieron personas" (Incorrecto).',
+                    'Queísmo y Dequeísmo: Probar sustituyendo la subordinada por "eso". "Estoy seguro de eso" -> "Estoy seguro de que...".',
+                    'Redundancia: Evitar pleonasmos como "subir arriba" o "lapso de tiempo".'
+                ],
+                examples: [
+                    {
+                        problem: 'Corregir: "Hubieron muchos estudiantes que obtuvieron beca."',
+                        steps: [
+                            'El verbo "haber" cuando indica existencia es impersonal (solo se usa en singular).',
+                            'Corrección: "Hubo muchos estudiantes que obtuvieron beca."'
+                        ]
+                    }
+                ]
+            },
+
+            // --- INGLÉS ---
+            {
+                id: 'e1',
+                subject: 'english',
+                title: 'Verb Tenses & Agreement',
+                summary: 'Tiempos verbales y concordancia sujeto-verbo.',
+                theory: 'English grammar questions in PAA test mastery of basic to intermediate verb structures and subject-verb consistency.',
+                rules: [
+                    'Present Simple: He/She/It adds -s/-es to the verb base.',
+                    'Past Simple: Used for completed actions at a specific time in the past.',
+                    'Present Perfect: Subject + have/has + Past Participle (for actions with relevance to the present).'
+                ],
+                examples: [
+                    {
+                        problem: 'Choose the correct form: "She __________ in Guadalajara for five years before moving to Mexico City."',
+                        steps: [
+                            'Action completed before another past event -> Past Perfect or Simple Past depending on context.',
+                            'Correct answer: "lived" or "had lived".'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'e2',
+                subject: 'english',
+                title: 'Conditionals (Zero, 1st, 2nd, 3rd)',
+                summary: 'Estructuras condicionales y sus reglas.',
+                theory: 'Conditionals express hypothetical scenarios and their consequences.',
+                rules: [
+                    'Zero Conditional (Facts): If + Present Simple, Present Simple.',
+                    '1st Conditional (Real Future): If + Present Simple, Will + Verb.',
+                    '2nd Conditional (Unreal Present/Future): If + Past Simple, Would + Verb.'
+                ],
+                examples: [
+                    {
+                        problem: 'Complete: "If I __________ enough time tomorrow, I will study for the PAA test."',
+                        steps: [
+                            'First conditional structure (If + Present Simple, Will + base verb).',
+                            'Correct answer: "have".'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'e3',
+                subject: 'english',
+                title: 'Prepositions of Time and Place',
+                summary: 'Uso correcto de IN, ON, AT.',
+                theory: 'Mastering prepositions is vital for standard written English accuracy.',
+                rules: [
+                    'IN: Months, years, centuries, enclosed spaces (In May, In 2024, In the room).',
+                    'ON: Days of the week, specific dates, surfaces (On Monday, On May 5th, On the table).',
+                    'AT: Precise times, specific locations (At 5:00 PM, At the university).'
+                ],
+                examples: [
+                    {
+                        problem: 'Choose the correct preposition: "The PAA exam is scheduled __________ May 15th."',
+                        steps: [
+                            'May 15th is a specific date with a day included.',
+                            'Correct preposition: "on".'
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        /* ================= BANCO DE MINIJUEGOS Y REACTIVOS ================= */
+        const minigamesCatalog = [
+            // MATEMÁTICAS
+            {
+                id: 'g_math_calc',
+                subject: 'math',
+                title: 'Desafío de Cálculo Rápido',
+                desc: 'Resuelve operaciones y ecuaciones ágilmente aplicando la jerarquía de operaciones y simplificación.',
+                questions: [
+                    {
+                        q: '¿Cuál es el resultado de: 12 + 4 × (6 - 2²)?',
+                        options: ['20', '32', '28', '16'],
+                        correct: 0,
+                        explanation: '1) 2² = 4. 2) (6 - 4) = 2. 3) 4 × 2 = 8. 4) 12 + 8 = 20.'
+                    },
+                    {
+                        q: 'Despeja x de la ecuación: 3x - 5 = 16.',
+                        options: ['x = 7', 'x = 5', 'x = 8', 'x = 6'],
+                        correct: 0,
+                        explanation: '3x = 16 + 5 => 3x = 21 => x = 7.'
+                    },
+                    {
+                        q: '¿Cuál es el 15% de 240?',
+                        options: ['36', '24', '40', '30'],
+                        correct: 0,
+                        explanation: '240 × 0.15 = 36.'
+                    }
+                ]
+            },
+            {
+                id: 'g_math_seq',
+                subject: 'math',
+                title: 'Secuencias y Patrones Numéricos',
+                desc: 'Encuentra el término faltante analizando el patrón de la serie numérica.',
+                questions: [
+                    {
+                        q: '¿Qué número sigue en la serie: 3, 7, 15, 31, ___?',
+                        options: ['63', '45', '60', '52'],
+                        correct: 0,
+                        explanation: 'El patrón es: (anterior × 2) + 1. Entonces: (31 × 2) + 1 = 63.'
+                    },
+                    {
+                        q: 'Halla el término faltante: 2, 6, 18, 54, ___?',
+                        options: ['162', '108', '144', '120'],
+                        correct: 0,
+                        explanation: 'Cada número se multiplica por 3: 54 × 3 = 162.'
+                    }
+                ]
+            },
+
+            // ESPAÑOL
+            {
+                id: 'g_esp_analog',
+                subject: 'spanish',
+                title: 'Completar Analogías Verbales',
+                desc: 'Identifica la relación lógica equivalente entre pares de palabras.',
+                questions: [
+                    {
+                        q: 'TECLADO : COMPUTADORA ::',
+                        options: ['Volante : Automóvil', 'Libro : Hoja', 'Pintura : Pincel', 'Pantalla : Televisión'],
+                        correct: 0,
+                        explanation: 'El teclado es un periférico de entrada esencial del ordenador, así como el volante dirige el automóvil.'
+                    },
+                    {
+                        q: 'CIRUJANO : BISTURÍ ::',
+                        options: ['Escultor : Cincel', 'Pintor : Cuadro', 'Profesor : Tiza', 'Médico : Hospital'],
+                        correct: 0,
+                        explanation: 'El cirujano utiliza el bisturí como herramienta directa de trabajo, al igual que el escultor utiliza el cincel.'
+                    }
+                ]
+            },
+            {
+                id: 'g_esp_errors',
+                subject: 'spanish',
+                title: 'Cazador de Errores Gramaticales',
+                desc: 'Detecta incorrecciones sintácticas, queísmo o falta de concordancia.',
+                questions: [
+                    {
+                        q: 'Identifica la oración redactada CORRECTAMENTE:',
+                        options: [
+                            'Hubo muchas personas en el evento de la universidad.',
+                            'Hubieron muchas personas en el evento de la universidad.',
+                            'Habían muchas personas en el evento de la universidad.',
+                            'Hubieron bastantes asistentes presentes.'
+                        ],
+                        correct: 0,
+                        explanation: 'El verbo "haber" en sentido existencial es impersonal y siempre debe permanecer en singular: "Hubo muchas personas".'
+                    },
+                    {
+                        q: '¿Cuál oración presenta dequeísmo?',
+                        options: [
+                            'Me opinó de que debemos entregar el trabajo mañana.',
+                            'Estoy seguro de que pasaremos el examen.',
+                            'No me cabe duda de que estudiaste bastante.',
+                            'Me alegro de que estés aquí.'
+                        ],
+                        correct: 0,
+                        explanation: 'El verbo opinar no exige la preposición "de". Lo correcto es: "Me opinó que debemos...".'
+                    }
+                ]
+            },
+
+            // INGLÉS
+            {
+                id: 'g_eng_verbs',
+                subject: 'english',
+                title: 'Verb Tense Challenge',
+                desc: 'Select the correct English verb form according to the context.',
+                questions: [
+                    {
+                        q: 'By the time the professor arrived, the students __________ the exercise.',
+                        options: ['had finished', 'have finished', 'finishing', 'finish'],
+                        correct: 0,
+                        explanation: 'Past Perfect ("had finished") is required for an action completed before another past event.'
+                    },
+                    {
+                        q: 'If she __________ hard, she will pass the PAA test easily.',
+                        options: ['studies', 'studied', 'will study', 'has studied'],
+                        correct: 0,
+                        explanation: 'First Conditional: "If" clause takes Present Simple ("studies").'
+                    }
+                ]
+            },
+            {
+                id: 'g_eng_prep',
+                subject: 'english',
+                title: 'Vocabulary & Preposition Spotter',
+                desc: 'Complete sentences using appropriate prepositions and contextual vocabulary.',
+                questions: [
+                    {
+                        q: 'The international conference will take place __________ October 24th.',
+                        options: ['on', 'in', 'at', 'by'],
+                        correct: 0,
+                        explanation: 'We use "ON" for specific dates (October 24th).'
+                    },
+                    {
+                        q: 'They have been researching this phenomenon __________ 2018.',
+                        options: ['since', 'for', 'during', 'from'],
+                        correct: 0,
+                        explanation: '"SINCE" is used with a specific starting point in time for Present Perfect.'
+                    }
+                ]
+            }
+        ];
+
+        /* ================= BANCO DE PREGUNTAS DEL SIMULADOR PAA (50 REACTIVOS) ================= */
+        const simulatorQuestionsBank = [
+            // MATEMÁTICAS (20 preguntas)
+            { id: 1, subject: 'math', q: 'Un tinaco cilíndrico tiene un radio de 2 metros y una altura de 3 metros. ¿Cuál es su volumen total en metros cúbicos? (Usa V = π × r² × h)', options: ['12π m³', '6π m³', '18π m³', '24π m³'], correct: 0, exp: 'V = π × (2)² × 3 = π × 4 × 3 = 12π m³.' },
+            { id: 2, subject: 'math', q: 'Si 3x + 9 = 24, ¿cuál es el valor de 2x - 1?', options: ['9', '5', '10', '11'], correct: 0, exp: '3x = 15 => x = 5. Luego 2(5) - 1 = 10 - 1 = 9.' },
+            { id: 3, subject: 'math', q: 'En un triángulo rectángulo, los catetos miden 5 cm y 12 cm. ¿Cuánto mide su hipotenusa?', options: ['13 cm', '15 cm', '17 cm', '14 cm'], correct: 0, exp: 'c² = 5² + 12² = 25 + 144 = 169 => c = √169 = 13 cm.' },
+            { id: 4, subject: 'math', q: '¿Cuál es el promedio (media aritmética) de los siguientes valores: 12, 16, 20, 24, 28?', options: ['20', '18', '22', '24'], correct: 0, exp: 'Suma = 100 / 5 = 20.' },
+            { id: 5, subject: 'math', q: '¿Cuál es el resultado simplificado de (x⁴ × x⁶) / x³?', options: ['x⁷', 'x⁵', 'x⁸', 'x¹³'], correct: 0, exp: 'x⁴⁺⁶ / x³ = x¹⁰ / x³ = x¹⁰⁻³ = x⁷.' },
+            { id: 6, subject: 'math', q: 'Un abrigo cuesta $1,200. Si se aplica un descuento del 25%, ¿cuánto se pagará en total?', options: [' $900', '$950', '$850', '$1,000'], correct: 0, exp: 'Descuento: 1200 × 0.25 = 300. Precio final: 1200 - 300 = $900.' },
+            { id: 7, subject: 'math', q: '¿Cuál es el Mínimo Común Múltiplo (MCM) de 8, 12 y 15?', options: ['120', '60', '90', '180'], correct: 0, exp: 'Descomposición en primos: 8=2³, 12=2²×3, 15=3×5. MCM = 2³ × 3 × 5 = 8 × 15 = 120.' },
+            { id: 8, subject: 'math', q: '¿De cuántas maneras distintas se pueden organizar 3 libros en un estante?', options: ['6', '3', '9', '12'], correct: 0, exp: 'Permutación de 3 elementos: 3! = 3 × 2 × 1 = 6.' },
+            { id: 9, subject: 'math', q: 'Si se lanza un dado imparcial de 6 caras, ¿cuál es la probabilidad de obtener un número primo (2, 3, 5)?', options: ['1/2 (50%)', '1/3', '2/3', '1/6'], correct: 0, exp: 'Casos favorables: {2, 3, 5} = 3. Casos totales = 6. P = 3/6 = 1/2.' },
+            { id: 10, subject: 'math', q: '¿Cuál es la pendiente m de la recta que pasa por los puntos (2, 3) y (6, 11)?', options: ['2', '4', '3', '1/2'], correct: 0, exp: 'm = (11 - 3) / (6 - 2) = 8 / 4 = 2.' },
+            { id: 11, subject: 'math', q: 'Factoriza completamente la expresión: x² - 25.', options: ['(x - 5)(x + 5)', '(x - 5)²', '(x + 5)²', '(x - 25)(x + 1)'], correct: 0, exp: 'Diferencia de cuadrados perfectos: √x²=x, √25=5 => (x-5)(x+5).' },
+            { id: 12, subject: 'math', q: '¿Cuál es el valor numérico de f(x) = x² - 4x + 3 cuando x = -1?', options: ['8', '0', '6', '-2'], correct: 0, exp: 'f(-1) = (-1)² - 4(-1) + 3 = 1 + 4 + 3 = 8.' },
+            { id: 13, subject: 'math', q: 'Un carro recorre 180 km en 2 horas. A esa misma velocidad constante, ¿cuántos km recorrerá en 5 horas?', options: ['450 km', '400 km', '500 km', '360 km'], correct: 0, exp: 'Velocidad = 180 / 2 = 90 km/h. Distancia en 5 hrs = 90 × 5 = 450 km.' },
+            { id: 14, subject: 'math', q: '¿Cuál es la distancia entre el punto A(0,0) y el punto B(6,8) en el plano cartesiano?', options: ['10', '14', '12', '8'], correct: 0, exp: 'd = √[(6-0)² + (8-0)²] = √[36 + 64] = √100 = 10.' },
+            { id: 15, subject: 'math', q: 'Resolver la inecuación: 2x + 4 > 10.', options: ['x > 3', 'x < 3', 'x > 7', 'x < 7'], correct: 0, exp: '2x > 6 => x > 3.' },
+            { id: 16, subject: 'math', q: 'El área de un cuadrado es 64 cm². ¿Cuál es su perímetro?', options: ['32 cm', '16 cm', '24 cm', '64 cm'], correct: 0, exp: 'Lado = √64 = 8 cm. Perímetro = 4 × 8 = 32 cm.' },
+            { id: 17, subject: 'math', q: 'En el sistema: x + y = 12  e  x - y = 2. Hallar el valor de x.', options: ['7', '5', '8', '6'], correct: 0, exp: 'Sumando ambas ecuaciones: 2x = 14 => x = 7.' },
+            { id: 18, subject: 'math', q: '¿Qué ángulo complementa a un ángulo de 35° para sumar 90°?', options: ['55°', '145°', '65°', '45°'], correct: 0, exp: 'Ángulos complementarios suman 90°: 90 - 35 = 55°.' },
+            { id: 19, subject: 'math', q: '¿Cuál es la razón de la serie geométrica: 2, 6, 18, 54...?', options: ['3', '2', '4', '6'], correct: 0, exp: '6 / 2 = 3; 18 / 6 = 3. La razón constante es 3.' },
+            { id: 20, subject: 'math', q: '¿Cuál es el valor del radio r para la circunferencia x² + y² = 81?', options: ['9', '81', '18', '4.5'], correct: 0, exp: 'r² = 81 => r = √81 = 9.' },
+
+            // ESPAÑOL (15 preguntas)
+            { id: 21, subject: 'spanish', q: 'Selecciona la opción que exprese una analogía equivalente a "HOJA : LIBRO":', options: ['Página : Cuaderno', 'Pintura : Marco', 'Tinta : Pluma', 'Capítulo : Título'], correct: 0, exp: 'Una hoja es un elemento constitutivo que integra un libro, igual que la página al cuaderno.' },
+            { id: 22, subject: 'spanish', q: 'Elija el conector adecuado: "Avanzó con paso firme; __________, las inclemencias del tiempo complicaron la travesía."', options: ['sin embargo', 'por lo tanto', 'puesto que', 'en consecuencia'], correct: 0, exp: 'Se requiere un conector de oposición o contraste ("sin embargo").' },
+            { id: 23, subject: 'spanish', q: 'Identifique la oración que contiene un error de concordancia:', options: ['Habían demasiadas dudas en el salón.', 'Hubo muchas dudas en el salón.', 'Surgieron varias dudas durante la clase.', 'Quedaron aclaradas todas las dudas.'], correct: 0, exp: 'El verbo "haber" impersonal no debe usarse en plural ("Habían").' },
+            { id: 24, subject: 'spanish', q: '¿Qué opción muestra un pleonasmo o redundancia innecesaria?', options: ['Salió afuera inmediatamente.', 'Salió rápidamente del salón.', 'Ingresó al aula con prisa.', 'Avanzó hacia la puerta.'], correct: 0, exp: '"Salir afuera" es redundante pues la acción de salir implica dirigirse al exterior.' },
+            { id: 25, subject: 'spanish', q: 'Complete la analogía: ANTIMICROBIANO : BACTERIA ::', options: ['Fungicida : Hongo', 'Insecto : Plaguicida', 'Vacuna : Enfermedad', 'Antídoto : Paciente'], correct: 0, exp: 'Un antimicrobiano combate específicamente bacterias, igual que un fungicida a los hongos.' },
+            { id: 26, subject: 'spanish', q: 'Identifique el tono predominante en un ensayo científico que expone datos estadísticos sobre el calentamiento global sin emitir juicios de valor:', options: ['Objetivo e informativo', 'Subjetivo y emotivo', 'Persuasivo y poético', 'Crítico y satírico'], correct: 0, exp: 'Al presentar datos puros sin juicio personal, el tono es estrictamente objetivo e informativo.' },
+            { id: 27, subject: 'spanish', q: 'Elija la opción bien redactada sin queísmo ni dequeísmo:', options: ['Estoy convencido de que ganaremos el concurso.', 'Estoy convencido que ganaremos el concurso.', 'Pienso de que la prueba estuvo sencilla.', 'Opino de que debemos revisar la respuesta.'], correct: 0, exp: 'El adjetivo "convencido" rige la preposición "de": estar convencido DE algo.' },
+            { id: 28, subject: 'spanish', q: '¿Cuál es el sinónimo contextual más adecuado para la palabra "EFÍMERO"?', options: ['Pasajero', 'Eterno', 'Duradero', 'Constante'], correct: 0, exp: 'Efímero significa de muy corta duración, por tanto su sinónimo es pasajero.' },
+            { id: 29, subject: 'spanish', q: 'Identifique el antónimo directo de la palabra "UTÓPICO":', options: ['Realista', 'Quimérico', 'Ideal', 'Ficticio'], correct: 0, exp: 'Utópico se refiere a algo irrealizable o ideal; su opuesto directo es realista.' },
+            { id: 30, subject: 'spanish', q: '¿Cuál es la función principal de un conector causal como "ya que" o "puesto que"?', options: ['Explicar el motivo o razón de una afirmación previa.', 'Introducir una objeción a la idea anterior.', 'Ordenar cronológicamente los acontecimientos.', 'Añadir elementos en una lista enumeration.'], correct: 0, exp: 'Los conectores causales justifican la causa o motivo de lo expresado.' },
+            { id: 31, subject: 'spanish', q: 'Seleccione la opción con acentuación ortográfica correcta:', options: ['El examen de admisión fue muy ágil.', 'El exámen de admision fue muy agil.', 'El examén de admisión fue muy ágil.', 'El examen de admisión fué muy ágil.'], correct: 0, exp: '"Examen" no lleva tilde por ser llana terminada en n; "admisión" es aguda terminada en n; "ágil" es llana terminada en l.' },
+            { id: 32, subject: 'spanish', q: 'En el enunciado: "La arquitectura colonial de la ciudad atrae a miles de turistas cada año." ¿Cuál es el sujeto sintáctico?', options: ['La arquitectura colonial de la ciudad', 'miles de turistas', 'atrae', 'cada año'], correct: 0, exp: 'El sujeto que realiza la acción de atraer es "La arquitectura colonial de la ciudad".' },
+            { id: 33, subject: 'spanish', q: '¿Qué figura retórica se observa en: "El murmullo del río era una melodía que tranquilizaba su espíritu"?', options: ['Metáfora', 'Hipérbole', 'Pleonasmo', 'Onomatopeya'], correct: 0, exp: 'Se equipara directamente el murmullo del río con una melodía sin usar "como" (Metáfora).' },
+            { id: 34, subject: 'spanish', q: 'Identifique la oración que presenta un error gramatical de dequeísmo:', options: ['Ella piensa de que la junta terminará temprano.', 'Ella está segura de que la junta terminará temprano.', 'Ella se acordó de que debía entregar la tarea.', 'Ella se cercioró de que la puerta estuviera cerrada.'], correct: 0, exp: 'El verbo "pensar" no requiere "de": "Ella piensa que...".' },
+            { id: 35, subject: 'spanish', q: 'Complete: "No asistió a la clase de regularización __________ estuvo enfermo, __________ envió sus tareas a tiempo."', options: ['porque - pero', 'sin embargo - ya que', 'por lo tanto - aunque', 'no obstante - porque'], correct: 0, exp: 'Primero se da la causa ("porque estuvo enfermo") y luego la oposición ("pero envió sus tareas").' },
+
+            // INGLÉS (15 preguntas)
+            { id: 36, subject: 'english', q: 'Choose the correct form to complete: "By the time the bell rang, the teacher __________ the exam papers."', options: ['had already collected', 'has already collected', 'is collecting', 'collects'], correct: 0, exp: 'Past Perfect is used for an action completed prior to another past time ("rang").' },
+            { id: 37, subject: 'english', q: 'Complete: "If you __________ water to 100°C, it boils."', options: ['heat', 'will heat', 'heated', 'would heat'], correct: 0, exp: 'Zero conditional for scientific facts uses Present Simple in both clauses.' },
+            { id: 38, subject: 'english', q: 'Choose the correct preposition: "The international scientific conference starts __________ 9:00 AM."', options: ['at', 'on', 'in', 'by'], correct: 0, exp: 'We use "AT" for specific clock times.' },
+            { id: 39, subject: 'english', q: 'Select the sentence with the correct grammar structure:', options: ['She has lived in Guadalajara since 2015.', 'She is living in Guadalajara since 2015.', 'She lived in Guadalajara since 2015.', 'She lives in Guadalajara since 2015.'], correct: 0, exp: 'Present Perfect + "since" is used for actions starting in the past and continuing to the present.' },
+            { id: 40, subject: 'english', q: 'What is the correct passive voice of: "The committee approved the new academic proposal"?', options: ['The new academic proposal was approved by the committee.', 'The new academic proposal is approved by the committee.', 'The new academic proposal has been approved by the committee.', 'The new academic proposal approved the committee.'], correct: 0, exp: 'Simple Past Passive: Subject + was/were + Past Participle.' },
+            { id: 41, subject: 'english', q: 'Choose the correct comparative form: "This math problem is __________ than the previous one."', options: ['more difficult', 'difficult2er', 'most difficult', 'as difficult'], correct: 0, exp: 'Adjectives with 3+ syllables use "more" for comparatives.' },
+            { id: 42, subject: 'english', q: 'Complete: "I haven\'t seen my high school friends __________ a long time."', options: ['for', 'since', 'during', 'while'], correct: 0, exp: '"FOR" is used to express duration or period of time.' },
+            { id: 43, subject: 'english', q: 'Identify the correct relative pronoun: "The student __________ score was the highest received a scholarship."', options: ['whose', 'who', 'which', 'whom'], correct: 0, exp: '"Whose" indicates possession ("whose score").' },
+            { id: 44, subject: 'english', q: 'Choose the correct option: "She promised she __________ us as soon as she arrived."', options: ['would call', 'will call', 'calls', 'is calling'], correct: 0, exp: 'Reported promise in past context uses "would".' },
+            { id: 45, subject: 'english', q: 'Complete: "Neither the professor nor the students __________ aware of the schedule change."', options: ['were', 'was', 'is', 'has been'], correct: 0, exp: 'With "neither... nor", verb agrees with the closer subject ("students" -> plural "were").' },
+            { id: 46, subject: 'english', q: 'What is the opposite of the word "INCREASE"?', options: ['Decrease', 'Expand', 'Enhance', 'Escalate'], correct: 0, exp: '"Decrease" means to make or become smaller.' },
+            { id: 47, subject: 'english', q: 'Choose the word that best fits: "Although it was raining heavily, they decided to __________ with the outdoor ceremony."', options: ['proceed', 'cancel', 'postpone', 'prevent'], correct: 0, exp: '"Proceed" means to carry on or continue as planned despite the rain.' },
+            { id: 48, subject: 'english', q: 'Complete: "Would you mind __________ the window? It is getting cold."', options: ['closing', 'to close', 'close', 'closed'], correct: 0, exp: '"Would you mind" is followed by a gerund (-ing form).' },
+            { id: 49, subject: 'english', q: 'Select the correct sentence:', options: ['Hardly had I entered the room when the phone rang.', 'Hardly I had entered the room when the phone rang.', 'Hardly enter I the room when phone rang.', 'Hardly I entered the room phone rang.'], correct: 0, exp: 'Inversion occurs after negative adverbials like "Hardly had I...".' },
+            { id: 50, subject: 'english', q: 'Choose the correct meaning of "ESSENTIAL":', options: ['Crucial or extremely important', 'Optional and unnecessary', 'Secondary or minor', 'Temporary'], correct: 0, exp: 'Essential means absolutely necessary or vital.' }
+        ];
+
+        /* ================= ESTADO DE LA APLICACIÓN ================= */
+        let currentTab = 'library';
+        let currentLibrarySubject = 'math';
+        let currentGameSubjectFilter = 'all';
+
+        // Estado Minijuego
+        let activeGameObj = null;
+        let gameQuestionsQueue = [];
+        let gameCurrentIndex = 0;
+        let gameScore = 0;
+        let gameTimerInterval = null;
+        let gameTimeLeft = 30;
+        let isTimedGame = false;
+
+        // Estado Simulador
+        let simMode = 'full';
+        let simQuestions = [];
+        let simUserAnswers = [];
+        let simCurrentIndex = 0;
+        let simTimerInterval = null;
+        let simTimeLeftSeconds = 45 * 60; // 45 Minutos
+
+        /* ================= INICIALIZACIÓN ================= */
+        window.onload = function() {
+            renderLibraryCards();
+            renderMinigamesGrid();
+        };
+
+        // Algoritmo de Aleatoriedad (Fisher-Yates Shuffle)
+        function shuffleArray(array) {
+            let shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        /* ================= NAVEGACIÓN DE PESTAÑAS ================= */
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('section-library').classList.add('hidden');
+            document.getElementById('section-minigames').classList.add('hidden');
+            document.getElementById('section-simulator').classList.add('hidden');
+
+            document.getElementById('nav-library').className = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/5';
+            document.getElementById('nav-minigames').className = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/5';
+            document.getElementById('nav-simulator').className = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/5';
+
+            if (tab === 'library') {
+                document.getElementById('section-library').classList.remove('hidden');
+                document.getElementById('nav-library').className = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-white bg-brand-700/60 border border-brand-500/40';
+            } else if (tab === 'minigames') {
+                document.getElementById('section-minigames').classList.remove('hidden');
+                document.getElementById('nav-minigames').className = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-white bg-brand-700/60 border border-brand-500/40';
+            } else if (tab === 'simulator') {
+                document.getElementById('section-simulator').classList.remove('hidden');
+                document.getElementById('nav-simulator').className = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-white bg-brand-700/60 border border-brand-500/40';
+            }
+        }
+
+        /* ================= LÓGICA DE BIBLIOTECA / FORMULARIO ================= */
+        function filterLibrary(subject) {
+            currentLibrarySubject = subject;
+            ['math', 'spanish', 'english'].forEach(s => {
+                const btn = document.getElementById(`lib-filter-${s}`);
+                if (s === subject) {
+                    btn.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-white bg-brand-600';
+                } else {
+                    btn.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-gray-400 hover:text-white';
+                }
+            });
+            renderLibraryCards();
+        }
+
+        function renderLibraryCards() {
+            const container = document.getElementById('library-cards-grid');
+            container.innerHTML = '';
+
+            const filtered = libraryData.filter(item => item.subject === currentLibrarySubject);
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-card glass-card-hover p-5 rounded-2xl cursor-pointer flex flex-col justify-between space-y-4';
+                card.onclick = () => openLibraryModal(item.id);
+
+                let badgeColor = item.subject === 'math' ? 'bg-purple-900/60 text-purple-300' : (item.subject === 'spanish' ? 'bg-pink-900/60 text-pink-300' : 'bg-indigo-900/60 text-indigo-300');
+                let badgeText = item.subject === 'math' ? 'Matemáticas' : (item.subject === 'spanish' ? 'Español' : 'Inglés');
+
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        <span class="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded ${badgeColor} border border-white/10">${badgeText}</span>
+                        <h3 class="text-lg font-bold text-white group-hover:text-brand-300 transition-colors">${item.title}</h3>
+                        <p class="text-xs text-gray-300 line-clamp-2">${item.summary}</p>
+                    </div>
+                    <div class="pt-2 border-t border-white/5 flex items-center justify-between text-xs text-brand-400 font-semibold">
+                        <span>Ver teoría y ejemplos</span>
+                        <span>→</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openLibraryModal(itemId) {
+            const item = libraryData.find(i => i.id === itemId);
+            if (!item) return;
+
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-subject-tag').innerText = item.subject === 'math' ? 'Matemáticas' : (item.subject === 'spanish' ? 'Español' : 'Inglés');
+            
+            const body = document.getElementById('modal-body-content');
+            
+            let rulesHTML = item.rules.map(r => `<li class="text-sm text-gray-300 font-mono bg-black/30 px-3 py-1.5 rounded-lg border border-white/5">${r}</li>`).join('');
+            
+            let examplesHTML = item.examples.map((ex, idx) => `
+                <div class="bg-brand-950/50 p-4 rounded-xl border border-brand-800/40 space-y-2">
+                    <p class="text-xs font-bold text-brand-400 uppercase tracking-wider">Ejemplo ${idx + 1}</p>
+                    <p class="text-sm font-semibold text-white">${ex.problem}</p>
+                    <div class="pl-3 border-l-2 border-brand-500 space-y-1 text-xs text-gray-300">
+                        ${ex.steps.map(s => `<p>• ${s}</p>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            body.innerHTML = `
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-brand-300 uppercase tracking-wider">Marco Teórico & Explicación</h4>
+                    <p class="text-sm text-gray-200 leading-relaxed">${item.theory}</p>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-brand-300 uppercase tracking-wider">Reglas Clave & Fórmulas</h4>
+                    <ul class="space-y-2">${rulesHTML}</ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-brand-300 uppercase tracking-wider">Ejemplos Resueltos Paso a Paso</h4>
+                    <div class="space-y-3">${examplesHTML}</div>
+                </div>
+            `;
+
+            document.getElementById('library-modal').classList.remove('hidden');
+        }
+
+        function closeLibraryModal() {
+            document.getElementById('library-modal').classList.add('hidden');
+        }
+
+        /* ================= LÓGICA DE MINIJUEGOS ================= */
+        function filterGames(subject) {
+            currentGameSubjectFilter = subject;
+            ['math', 'spanish', 'english', 'all'].forEach(s => {
+                const btn = document.getElementById(`game-filter-${s}`);
+                if (s === subject) {
+                    btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white border border-brand-400';
+                } else {
+                    btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500';
+                }
+            });
+            renderMinigamesGrid();
+        }
+
+        function renderMinigamesGrid() {
+            const container = document.getElementById('game-selection-view');
+            container.classList.remove('hidden');
+            document.getElementById('active-game-view').classList.add('hidden');
+            container.innerHTML = '';
+
+            let filtered = minigamesCatalog;
+            if (currentGameSubjectFilter !== 'all') {
+                filtered = minigamesCatalog.filter(g => g.subject === currentGameSubjectFilter);
+            }
+
+            filtered.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'glass-card glass-card-hover p-6 rounded-2xl space-y-4 flex flex-col justify-between';
+
+                let badgeColor = game.subject === 'math' ? 'bg-purple-900/60 text-purple-300' : (game.subject === 'spanish' ? 'bg-pink-900/60 text-pink-300' : 'bg-indigo-900/60 text-indigo-300');
+                let badgeText = game.subject === 'math' ? 'Matemáticas' : (game.subject === 'spanish' ? 'Español' : 'Inglés');
+
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <span class="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded ${badgeColor} border border-white/10">${badgeText}</span>
+                        <h3 class="text-xl font-bold text-white">${game.title}</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">${game.desc}</p>
+                    </div>
+                    <button onclick="setupActiveGame('${game.id}')" class="w-full py-2.5 bg-brand-700/60 hover:bg-brand-600 text-white font-semibold rounded-xl text-sm transition-all border border-brand-500/30">
+                        Seleccionar Juego
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function setupActiveGame(gameId) {
+            activeGameObj = minigamesCatalog.find(g => g.id === gameId);
+            if (!activeGameObj) return;
+
+            document.getElementById('game-selection-view').classList.add('hidden');
+            document.getElementById('active-game-view').classList.remove('hidden');
+
+            document.getElementById('game-title').innerText = activeGameObj.title;
+            document.getElementById('game-materia-tag').innerText = activeGameObj.subject === 'math' ? 'Matemáticas' : (activeGameObj.subject === 'spanish' ? 'Español' : 'Inglés');
+            document.getElementById('game-description').innerText = activeGameObj.desc;
+
+            // Reset cajas
+            document.getElementById('game-config-box').classList.remove('hidden');
+            document.getElementById('game-play-box').classList.add('hidden');
+            document.getElementById('game-results-box').classList.add('hidden');
+        }
+
+        function closeActiveGame() {
+            clearInterval(gameTimerInterval);
+            document.getElementById('active-game-view').classList.add('hidden');
+            document.getElementById('game-selection-view').classList.remove('hidden');
+        }
+
+        function startGameEngine() {
+            const timerOpt = document.querySelector('input[name="game-timer-opt"]:checked').value;
+            isTimedGame = timerOpt === 'timed';
+
+            // Aleatorizar preguntas
+            gameQuestionsQueue = shuffleArray(activeGameObj.questions);
+            gameCurrentIndex = 0;
+            gameScore = 0;
+
+            document.getElementById('game-config-box').classList.add('hidden');
+            document.getElementById('game-results-box').classList.add('hidden');
+            document.getElementById('game-play-box').classList.remove('hidden');
+
+            renderGameQuestion();
+        }
+
+        function renderGameQuestion() {
+            clearInterval(gameTimerInterval);
+            document.getElementById('game-feedback-box').classList.add('hidden');
+            document.getElementById('game-next-btn').classList.add('hidden');
+
+            if (gameCurrentIndex >= gameQuestionsQueue.length) {
+                finishMinigame();
+                return;
+            }
+
+            const currentQ = gameQuestionsQueue[gameCurrentIndex];
+
+            document.getElementById('game-progress-indicator').innerText = `Pregunta ${gameCurrentIndex + 1} de ${gameQuestionsQueue.length}`;
+            document.getElementById('game-score-count').innerText = `Puntaje: ${gameScore}`;
+
+            // Configurar Tiempo
+            const timerDisplay = document.getElementById('game-timer-display');
+            if (isTimedGame) {
+                timerDisplay.classList.remove('hidden');
+                gameTimeLeft = 30;
+                timerDisplay.innerText = `Tiempo: ${gameTimeLeft}s`;
+                gameTimerInterval = setInterval(() => {
+                    gameTimeLeft--;
+                    timerDisplay.innerText = `Tiempo: ${gameTimeLeft}s`;
+                    if (gameTimeLeft <= 0) {
+                        clearInterval(gameTimerInterval);
+                        handleGameAnswer(-1); // Tiempo agotado
+                    }
+                }, 1000);
+            } else {
+                timerDisplay.classList.add('hidden');
+            }
+
+            // Renderizar Opciones Mezcladas
+            const container = document.getElementById('game-interactive-container');
+            
+            // Mapeo para no perder índice correcto tras shuffle de opciones
+            let optionsWithIndices = currentQ.options.map((opt, i) => ({ text: opt, isCorrect: i === currentQ.correct }));
+            optionsWithIndices = shuffleArray(optionsWithIndices);
+
+            let optionsHTML = optionsWithIndices.map((optObj) => `
+                <button onclick="handleGameAnswer(${optObj.isCorrect})" class="game-opt-btn w-full p-4 rounded-xl text-left bg-black/40 hover:bg-brand-900/50 border border-brand-800/50 text-gray-200 hover:text-white transition-all text-sm font-medium">
+                    ${optObj.text}
+                </button>
+            `).join('');
+
+            container.innerHTML = `
+                <p class="text-base font-bold text-white leading-relaxed mb-4">${currentQ.q}</p>
+                <div class="space-y-3">${optionsHTML}</div>
+            `;
+        }
+
+        function handleGameAnswer(isCorrect) {
+            clearInterval(gameTimerInterval);
+
+            // Deshabilitar botones de opción
+            const btns = document.querySelectorAll('.game-opt-btn');
+            btns.forEach(b => {
+                b.disabled = true;
+                b.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+
+            const feedbackBox = document.getElementById('game-feedback-box');
+            feedbackBox.classList.remove('hidden');
+
+            const currentQ = gameQuestionsQueue[gameCurrentIndex];
+
+            if (isCorrect === true) {
+                gameScore++;
+                feedbackBox.className = 'p-4 rounded-xl text-sm font-medium border bg-green-950/60 border-green-500/50 text-green-200';
+                feedbackBox.innerHTML = `<p class="font-bold text-green-400 mb-1">¡Correcto!</p><p class="text-xs">${currentQ.explanation}</p>`;
+            } else {
+                feedbackBox.className = 'p-4 rounded-xl text-sm font-medium border bg-red-950/60 border-red-500/50 text-red-200';
+                let reason = isCorrect === -1 ? '¡Se agotó el tiempo!' : 'Respuesta Incorrecta.';
+                feedbackBox.innerHTML = `<p class="font-bold text-red-400 mb-1">${reason}</p><p class="text-xs">${currentQ.explanation}</p>`;
+            }
+
+            document.getElementById('game-score-count').innerText = `Puntaje: ${gameScore}`;
+            document.getElementById('game-next-btn').classList.remove('hidden');
+        }
+
+        function nextGameQuestion() {
+            gameCurrentIndex++;
+            renderGameQuestion();
+        }
+
+        function finishMinigame() {
+            document.getElementById('game-play-box').classList.add('hidden');
+            document.getElementById('game-results-box').classList.remove('hidden');
+
+            document.getElementById('game-final-score').innerText = `${gameScore} / ${gameQuestionsQueue.length}`;
+            
+            let pct = (gameScore / gameQuestionsQueue.length) * 100;
+            let performance = pct >= 80 ? '¡Excelente dominio conceptual!' : (pct >= 50 ? 'Buen intento. Revisa la biblioteca para afianzar.' : 'Se recomienda repasar la teoría básica.');
+            document.getElementById('game-performance-text').innerText = performance;
+        }
+
+        /* ================= LÓGICA DEL SIMULADOR PAA ================= */
+        function startSimulator() {
+            simMode = document.getElementById('sim-mode-select').value;
+            
+            // Filtrar preguntas por modalidad
+            if (simMode === 'full') {
+                simQuestions = shuffleArray(simulatorQuestionsBank);
+            } else {
+                simQuestions = shuffleArray(simulatorQuestionsBank.filter(q => q.subject === simMode));
+            }
+
+            simUserAnswers = new Array(simQuestions.length).fill(null);
+            simCurrentIndex = 0;
+            simTimeLeftSeconds = 45 * 60; // 45 Minutos
+
+            document.getElementById('sim-start-panel').classList.add('hidden');
+            document.getElementById('sim-results-panel').classList.add('hidden');
+            document.getElementById('sim-exam-panel').classList.remove('hidden');
+
+            document.getElementById('sim-total-count-text').innerText = simQuestions.length;
+
+            // Iniciar Cronómetro Global
+            clearInterval(simTimerInterval);
+            updateSimTimerDisplay();
+            simTimerInterval = setInterval(() => {
+                simTimeLeftSeconds--;
+                updateSimTimerDisplay();
+                if (simTimeLeftSeconds <= 0) {
+                    clearInterval(simTimerInterval);
+                    finishSimulator();
+                }
+            }, 1000);
+
+            renderSimQuestion();
+            renderSimGridNav();
+        }
+
+        function updateSimTimerDisplay() {
+            const mins = Math.floor(simTimeLeftSeconds / 60);
+            const secs = simTimeLeftSeconds % 60;
+            document.getElementById('sim-timer-clock').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function renderSimQuestion() {
+            const currentQ = simQuestions[simCurrentIndex];
+            document.getElementById('sim-current-index-text').innerText = simCurrentIndex + 1;
+
+            let badgeText = currentQ.subject === 'math' ? 'Matemáticas' : (currentQ.subject === 'spanish' ? 'Español' : 'Inglés');
+            document.getElementById('sim-subject-badge').innerText = badgeText;
+
+            document.getElementById('sim-question-text').innerText = `${simCurrentIndex + 1}. ${currentQ.q}`;
+
+            const container = document.getElementById('sim-options-container');
+            container.innerHTML = '';
+
+            currentQ.options.forEach((opt, idx) => {
+                const isSelected = simUserAnswers[simCurrentIndex] === idx;
+                const btn = document.createElement('button');
+                btn.onclick = () => selectSimAnswer(idx);
+                btn.className = `w-full p-4 rounded-xl text-left border transition-all text-sm font-medium flex items-center justify-between ${
+                    isSelected 
+                    ? 'bg-brand-700/50 border-brand-400 text-white shadow-lg' 
+                    : 'bg-black/30 hover:bg-white/5 border-white/10 text-gray-300'
+                }`;
+                btn.innerHTML = `
+                    <span>${String.fromCharCode(65 + idx)}) ${opt}</span>
+                    <span class="w-4 h-4 rounded-full border border-white/30 flex items-center justify-center ${isSelected ? 'bg-brand-500 border-brand-300' : ''}"></span>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Botones de Navegación
+            document.getElementById('sim-prev-btn').disabled = simCurrentIndex === 0;
+            document.getElementById('sim-prev-btn').style.opacity = simCurrentIndex === 0 ? '0.4' : '1';
+            
+            if (simCurrentIndex === simQuestions.length - 1) {
+                document.getElementById('sim-next-btn').innerText = 'Finalizar Examen';
+                document.getElementById('sim-next-btn').onclick = confirmFinishSim;
+            } else {
+                document.getElementById('sim-next-btn').innerText = 'Siguiente';
+                document.getElementById('sim-next-btn').onclick = () => navigateSimQuestion(1);
+            }
+
+            renderSimGridNav();
+        }
+
+        function selectSimAnswer(optionIdx) {
+            simUserAnswers[simCurrentIndex] = optionIdx;
+            renderSimQuestion();
+        }
+
+        function navigateSimQuestion(dir) {
+            let next = simCurrentIndex + dir;
+            if (next >= 0 && next < simQuestions.length) {
+                simCurrentIndex = next;
+                renderSimQuestion();
+            }
+        }
+
+        function renderSimGridNav() {
+            const grid = document.getElementById('sim-grid-nav');
+            grid.innerHTML = '';
+
+            simQuestions.forEach((_, idx) => {
+                const btn = document.createElement('button');
+                btn.onclick = () => {
+                    simCurrentIndex = idx;
+                    renderSimQuestion();
+                };
+
+                let isAnswered = simUserAnswers[idx] !== null;
+                let isCurrent = simCurrentIndex === idx;
+
+                btn.className = `w-8 h-8 rounded-lg text-xs font-bold transition-all ${
+                    isCurrent 
+                    ? 'ring-2 ring-brand-400 bg-brand-600 text-white' 
+                    : (isAnswered ? 'bg-pink-900/60 text-pink-200 border border-pink-500/40' : 'bg-black/40 text-gray-500 border border-white/5')
+                }`;
+                btn.innerText = idx + 1;
+                grid.appendChild(btn);
+            });
+        }
+
+        function confirmFinishSim() {
+            const unanswered = simUserAnswers.filter(a => a === null).length;
+            let msg = unanswered > 0 
+                ? `Tienes ${unanswered} pregunta(s) sin responder. ¿Deseas finalizar el examen de todos modos?`
+                : '¿Estás seguro de que deseas finalizar tu examen y obtener tus resultados?';
+            
+            openAlertModal('Finalizar Examen', msg, true, () => {
+                finishSimulator();
+            });
+        }
+
+        function finishSimulator() {
+            clearInterval(simTimerInterval);
+
+            let score = 0;
+            simQuestions.forEach((q, idx) => {
+                if (simUserAnswers[idx] === q.correct) {
+                    score++;
+                }
+            });
+
+            document.getElementById('sim-exam-panel').classList.add('hidden');
+            document.getElementById('sim-results-panel').classList.remove('hidden');
+
+            document.getElementById('sim-score-total').innerText = `${score} / ${simQuestions.length}`;
+            let percent = Math.round((score / simQuestions.length) * 100);
+            document.getElementById('sim-score-percent').innerText = `${percent}%`;
+
+            // Renderizar Lista de Revisión Paso a Paso
+            const reviewList = document.getElementById('sim-review-list');
+            reviewList.innerHTML = '';
+
+            simQuestions.forEach((q, idx) => {
+                const userAns = simUserAnswers[idx];
+                const isCorrect = userAns === q.correct;
+
+                const item = document.createElement('div');
+                item.className = `glass-card p-5 rounded-2xl border ${isCorrect ? 'border-green-500/30 bg-green-950/10' : 'border-red-500/30 bg-red-950/10'} space-y-3`;
+
+                let userAnsText = userAns !== null ? `${String.fromCharCode(65 + userAns)}) ${q.options[userAns]}` : 'Sin responder';
+                let correctAnsText = `${String.fromCharCode(65 + q.correct)}) ${q.options[q.correct]}`;
+
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-4">
+                        <span class="text-xs font-bold px-2.5 py-0.5 rounded ${isCorrect ? 'bg-green-900/60 text-green-300' : 'bg-red-900/60 text-red-300'} border border-white/10">
+                            ${isCorrect ? 'Correcto' : 'Incorrecto'}
+                        </span>
+                        <span class="text-xs text-gray-400">Reactivo ${idx + 1}</span>
+                    </div>
+
+                    <p class="text-sm font-bold text-white">${q.q}</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <div class="p-2.5 rounded-lg bg-black/40 border border-white/5">
+                            <span class="text-gray-400 block">Tu respuesta:</span>
+                            <span class="${isCorrect ? 'text-green-400' : 'text-red-400'} font-semibold">${userAnsText}</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-black/40 border border-white/5">
+                            <span class="text-gray-400 block">Respuesta correcta:</span>
+                            <span class="text-green-400 font-semibold">${correctAnsText}</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-950/40 p-3 rounded-lg border border-brand-800/40 text-xs text-gray-300 space-y-1">
+                        <span class="font-bold text-brand-300">Justificación paso a paso:</span>
+                        <p>${q.exp}</p>
+                    </div>
+                `;
+                reviewList.appendChild(item);
+            });
+        }
+
+        function resetSimulator() {
+            document.getElementById('sim-results-panel').classList.add('hidden');
+            document.getElementById('sim-start-panel').classList.remove('hidden');
+        }
+
+        /* ================= MODAL DE ALERTA GENERICO ================= */
+        function openAlertModal(title, msg, showCancel = false, onConfirm = null) {
+            document.getElementById('alert-modal-title').innerText = title;
+            document.getElementById('alert-modal-msg').innerText = msg;
+
+            const actions = document.getElementById('alert-modal-actions');
+            actions.innerHTML = '';
+
+            if (showCancel) {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.className = 'px-4 py-2 bg-white/10 hover:bg-white/20 text-gray-300 font-semibold rounded-lg text-sm';
+                cancelBtn.innerText = 'Cancelar';
+                cancelBtn.onclick = closeAlertModal;
+                actions.appendChild(cancelBtn);
+            }
+
+            const confirmBtn = document.createElement('button');
+            confirmBtn.className = 'px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-lg text-sm';
+            confirmBtn.innerText = 'Aceptar';
+            confirmBtn.onclick = () => {
+                closeAlertModal();
+                if (onConfirm) onConfirm();
+            };
+            actions.appendChild(confirmBtn);
+
+            document.getElementById('custom-alert-modal').classList.remove('hidden');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('custom-alert-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
