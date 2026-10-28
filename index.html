@@ -68,7 +68,7 @@
                     </div>
                     <div>
                         <span class="text-xl font-bold tracking-tight text-white block leading-none">Practica Conmigo</span>
-                        <span class="text-xs text-brand-500 font-medium tracking-wide">Unica y Especial para ti <3 </span>
+                        <span class="text-xs text-brand-500 font-medium tracking-wide">Unica y Especial para ti &lt;3 </span>
                     </div>
                 </div>
                 
@@ -100,8 +100,8 @@
                 </div>
                 <!-- Sub-tabs por Materia -->
                 <div class="flex bg-brand-900/30 p-1 rounded-xl border border-brand-800/40 self-start md:self-auto">
-                    <button onclick="filterLibrary('math')" id="lib-filter-math" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-white bg-brand-600">Matemáticas</button>
-                    <button onclick="filterLibrary('spanish')" id="lib-filter-spanish" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-gray-400 hover:text-white">Español</button>
+                    <button onclick="filterLibrary('spanish')" id="lib-filter-spanish" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-white bg-brand-600">Español</button>
+                    <button onclick="filterLibrary('math')" id="lib-filter-math" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-gray-400 hover:text-white">Matemáticas</button>
                     <button onclick="filterLibrary('english')" id="lib-filter-english" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-gray-400 hover:text-white">Inglés</button>
                 </div>
             </div>
@@ -117,25 +117,24 @@
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-brand-900/40 pb-5">
                 <div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Minijuegos de Práctica Entrenada</h1>
-                    <p class="text-gray-400 text-sm mt-1">Selecciona la materia para activar dinámicas de juego adaptadas al temario oficial.</p>
+                    <p class="text-gray-400 text-sm mt-1">Selecciona la materia para activar dinámicas de juego adaptadas al temario oficial (12 Minijuegos Disponibles).</p>
                 </div>
                 <!-- Filtro por Materia para Minijuegos -->
                 <div class="flex flex-wrap gap-2">
+                    <button onclick="filterGames('spanish')" id="game-filter-spanish" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white border border-brand-400">Español</button>
                     <button onclick="filterGames('math')" id="game-filter-math" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500">Matemáticas</button>
-                    <button onclick="filterGames('spanish')" id="game-filter-spanish" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500">Español</button>
                     <button onclick="filterGames('english')" id="game-filter-english" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500">Inglés</button>
-                    <button onclick="filterGames('all')" id="game-filter-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white border border-brand-400">Todos / Mixtos</button>
+                    <button onclick="filterGames('all')" id="game-filter-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500">Todos / Mixtos</button>
                 </div>
             </div>
 
-            <!-- Submenú de Selección de Juego u Opciones -->
+            <!-- Submenú de Selección de Juego -->
             <div id="game-selection-view" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Tarjetas de minijuegos -->
             </div>
 
             <!-- VISTA ACTIVA DEL MINIJUEGO SELECCIONADO -->
             <div id="active-game-view" class="hidden glass-card rounded-2xl p-6 sm:p-8 max-w-3xl mx-auto border border-brand-500/30">
-                <!-- Header del juego -->
                 <div class="flex items-center justify-between border-b border-brand-800/50 pb-4 mb-6">
                     <div>
                         <span id="game-materia-tag" class="text-xs uppercase font-bold tracking-wider px-2.5 py-1 rounded bg-brand-900/80 text-brand-300 border border-brand-700/50">Materia</span>
@@ -146,7 +145,6 @@
                     </button>
                 </div>
 
-                <!-- Configuración Pre-Juego -->
                 <div id="game-config-box" class="space-y-6 py-4">
                     <p id="game-description" class="text-gray-300 text-sm leading-relaxed">Descripción del minijuego y sus objetivos.</p>
                     <div class="bg-black/30 p-4 rounded-xl border border-white/5 space-y-3">
@@ -167,7 +165,6 @@
                     </button>
                 </div>
 
-                <!-- Pantalla del Juego en Ejecución -->
                 <div id="game-play-box" class="hidden space-y-6">
                     <div class="flex items-center justify-between text-xs sm:text-sm font-semibold text-gray-400 bg-black/40 px-4 py-2.5 rounded-xl border border-white/5">
                         <span id="game-progress-indicator">Pregunta 1 de 10</span>
@@ -175,20 +172,15 @@
                         <span id="game-score-count" class="text-green-400">Puntaje: 0</span>
                     </div>
 
-                    <div id="game-interactive-container" class="space-y-4">
-                        <!-- El contenido interactivo específico de cada minijuego se renderiza aquí -->
-                    </div>
+                    <div id="game-interactive-container" class="space-y-4"></div>
 
-                    <div id="game-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium border">
-                        <!-- Retroalimentación tras responder -->
-                    </div>
+                    <div id="game-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium border"></div>
 
                     <button id="game-next-btn" onclick="nextGameQuestion()" class="hidden w-full py-3 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl transition-all">
                         Siguiente Pregunta
                     </button>
                 </div>
 
-                <!-- Pantalla de Resultados del Juego -->
                 <div id="game-results-box" class="hidden text-center space-y-6 py-6">
                     <h3 class="text-2xl font-bold text-white">¡Minijuego Completado!</h3>
                     <div class="bg-brand-900/30 p-6 rounded-2xl border border-brand-800/60 max-w-sm mx-auto">
@@ -211,7 +203,6 @@
                 <p class="text-gray-400 text-sm mt-1">Prueba real estandarizada con reactivos tipo examen y cronómetro unificado.</p>
             </div>
 
-            <!-- Panel Inicial Configuración Examen -->
             <div id="sim-start-panel" class="glass-card rounded-2xl p-6 sm:p-10 max-w-2xl mx-auto space-y-6 border border-brand-500/30">
                 <div class="space-y-2 text-center">
                     <h2 class="text-2xl font-bold text-white">Configuración del Simulador</h2>
@@ -223,8 +214,8 @@
                         <label class="block text-sm font-semibold text-gray-200 mb-2">Selecciona la Modalidad:</label>
                         <select id="sim-mode-select" class="w-full bg-black/50 border border-brand-700/60 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500">
                             <option value="full">Examen Completo PAA (50 Reactivos - 45 Minutos Fijo)</option>
-                            <option value="math">Sección Matemáticas Solamente (20 Reactivos)</option>
                             <option value="spanish">Sección Español Solamente (15 Reactivos)</option>
+                            <option value="math">Sección Matemáticas Solamente (20 Reactivos)</option>
                             <option value="english">Sección Inglés Solamente (15 Reactivos)</option>
                         </select>
                     </div>
@@ -244,13 +235,11 @@
                 </button>
             </div>
 
-            <!-- Vista del Examen en Curso -->
             <div id="sim-exam-panel" class="hidden space-y-6">
-                <!-- Barra Superior con Cronómetro y Navegación -->
                 <div class="glass-card rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-brand-500/40 sticky top-20 z-30">
                     <div class="flex items-center gap-4">
                         <span class="text-sm font-bold text-gray-300">Reactivo: <span id="sim-current-index-text" class="text-brand-400 text-base">1</span> / <span id="sim-total-count-text">50</span></span>
-                        <span id="sim-subject-badge" class="text-xs font-semibold px-2.5 py-0.5 rounded bg-brand-900 text-brand-300 border border-brand-700">Matemáticas</span>
+                        <span id="sim-subject-badge" class="text-xs font-semibold px-2.5 py-0.5 rounded bg-brand-900 text-brand-300 border border-brand-700">Español</span>
                     </div>
 
                     <div class="flex items-center gap-6">
@@ -265,15 +254,12 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    <!-- Pregunta Actual -->
                     <div class="lg:col-span-3 glass-card rounded-2xl p-6 sm:p-8 space-y-6 border border-brand-500/20">
                         <div id="sim-question-text" class="text-base sm:text-lg font-medium text-white leading-relaxed">
                             Cargando pregunta...
                         </div>
 
-                        <div id="sim-options-container" class="space-y-3 pt-2">
-                            <!-- Opciones Múltiples -->
-                        </div>
+                        <div id="sim-options-container" class="space-y-3 pt-2"></div>
 
                         <div class="flex justify-between items-center pt-6 border-t border-brand-900/50">
                             <button onclick="navigateSimQuestion(-1)" id="sim-prev-btn" class="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-gray-300 text-sm font-semibold rounded-xl">
@@ -285,17 +271,13 @@
                         </div>
                     </div>
 
-                    <!-- Panel Lateral de Navegación Rápida -->
                     <div class="glass-card rounded-2xl p-5 border border-brand-500/20 space-y-4">
                         <h3 class="text-sm font-bold text-gray-200">Mapa de Reactivos</h3>
-                        <div id="sim-grid-nav" class="grid grid-cols-5 gap-2 max-h-80 overflow-y-auto custom-scrollbar p-1">
-                            <!-- Botones numéricos -->
-                        </div>
+                        <div id="sim-grid-nav" class="grid grid-cols-5 gap-2 max-h-80 overflow-y-auto custom-scrollbar p-1"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Vista de Resultados del Simulador -->
             <div id="sim-results-panel" class="hidden space-y-8">
                 <div class="glass-card rounded-2xl p-6 sm:p-8 border border-brand-500/40 text-center space-y-4">
                     <h2 class="text-3xl font-extrabold text-white">Resultado Global del Simulador</h2>
@@ -314,12 +296,9 @@
                     </button>
                 </div>
 
-                <!-- Revisión Detallada Pregunta por Pregunta -->
                 <div class="space-y-4">
                     <h3 class="text-xl font-bold text-white">Revisión Detallada de Respuestas</h3>
-                    <div id="sim-review-list" class="space-y-4">
-                        <!-- Lista de revisión paso a paso -->
-                    </div>
+                    <div id="sim-review-list" class="space-y-4"></div>
                 </div>
             </div>
         </section>
@@ -329,7 +308,6 @@
     <!-- Modal Extenso para Fichas de la Biblioteca -->
     <div id="library-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="glass-card bg-[#150a21] border border-brand-500/50 rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-            <!-- Modal Header -->
             <div class="p-6 border-b border-brand-900/60 flex items-center justify-between bg-brand-950/40">
                 <div>
                     <span id="modal-subject-tag" class="text-xs uppercase font-bold px-2.5 py-0.5 rounded bg-brand-900 text-brand-300 border border-brand-700">Materia</span>
@@ -339,11 +317,7 @@
                     ✕
                 </button>
             </div>
-            <!-- Modal Body -->
-            <div class="p-6 sm:p-8 overflow-y-auto custom-scrollbar space-y-6 text-gray-200" id="modal-body-content">
-                <!-- Contenido extenso inyectado dinámicamente -->
-            </div>
-            <!-- Modal Footer -->
+            <div class="p-6 sm:p-8 overflow-y-auto custom-scrollbar space-y-6 text-gray-200" id="modal-body-content"></div>
             <div class="p-4 border-t border-brand-900/60 bg-brand-950/40 text-right">
                 <button onclick="closeLibraryModal()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl text-sm">
                     Entendido / Cerrar
@@ -352,7 +326,7 @@
         </div>
     </div>
 
-    <!-- Modal de Confirmación Generico (Reemplazo de alert/confirm) -->
+    <!-- Modal de Confirmación Generico -->
     <div id="custom-alert-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="glass-card bg-[#180b26] border border-brand-500/50 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <h3 id="alert-modal-title" class="text-lg font-bold text-white">Atención</h3>
@@ -369,523 +343,50 @@
     <script>
         /* ================= BANCO DE DATOS: BIBLIOTECA EXTENSA ================= */
         const libraryData = [
-            // --- MATEMÁTICAS (29 Fórmulas / Conceptos Oficiales PAA UDG) ---
+            // --- ESPAÑOL (6 FICHAS COMPLETAS) ---
             {
-                id: 'm1',
-                subject: 'math',
-                title: 'Área de Figuras Planas',
-                summary: 'Fórmulas para Triángulo, Cuadrado, Rectángulo y Círculo.',
-                theory: 'El área mide la superficie encerrada por el límite de una figura bidimensional. Para la PAA es crucial dominar las áreas geométricas fundamentales.',
+                id: 's5',
+                subject: 'spanish',
+                title: 'Tipología Textual (Modalidades de Discurso)',
+                summary: 'Narrativo, Descriptivo, Expositivo y Argumentativo con intenciones comunicativas y preguntas clave.',
+                theory: 'Los textos se clasifican según la intención comunicativa principal del emisor y la estructura lógica que utilizan para transmitir el mensaje.',
                 rules: [
-                    'Triángulo: A = (Base × Altura) / 2',
-                    'Cuadrado: A = Lado²',
-                    'Rectángulo: A = Base × Altura',
-                    'Círculo: A = π × r²'
+                    'Texto Narrativo: Intención: Relatar hechos que suceden a personajes. Pregunta clave: ¿Qué ocurre? Ejemplos: Novelas, cuentos, noticias.',
+                    'Texto Descriptivo: Intención: Decir cómo son los objetos, personas, lugares o animales. Pregunta clave: ¿Cómo es? Ejemplos: Guías de viaje, diarios, novelas.',
+                    'Texto Expositivo: Intención: Explicar de forma objetiva hechos y conceptos. Pregunta clave: ¿Qué y por qué es así? Ejemplos: Libros de texto, artículos de divulgación.',
+                    'Texto Argumentativo: Intención: Defender ideas y convencer al lector. Pregunta clave: ¿Qué pienso? ¿Qué defiendes? Ejemplos: Ensayos, artículos de opinión, críticas.'
                 ],
                 examples: [
                     {
-                        problem: 'Un triángulo tiene una base de 12 cm y una altura de 7 cm. ¿Cuál es su área?',
+                        problem: '¿A qué tipología corresponde un texto que busca convencer mediante razones sobre los peligros del cambio climático?',
                         steps: [
-                            'Fórmula: A = (b × h) / 2',
-                            'Sustitución: A = (12 × 7) / 2',
-                            'Cálculo: A = 84 / 2 = 42 cm²'
+                            'Identificar la intención: Defender una postura para persuadir al lector.',
+                            'Pregunta que responde: ¿Qué pienso y por qué debes apoyarlo?',
+                            'Resultado: Texto Argumentativo.'
                         ]
                     }
                 ]
             },
             {
-                id: 'm2',
-                subject: 'math',
-                title: 'Perímetros',
-                summary: 'Suma de los lados de un polígono y longitud de circunferencia.',
-                theory: 'El perímetro es la longitud total del contorno de una figura plana.',
+                id: 's6',
+                subject: 'spanish',
+                title: 'Textos Literarios vs. No Literarios',
+                summary: 'Diferencias, funciones del lenguaje (poética vs referencial) y subgéneros normativos e informativos.',
+                theory: 'Los textos se dividen en Literarios (priorizan la función poética, estética y la ficción) y No Literarios (priorizan la función referencial, objetiva e instructiva/informativa).',
                 rules: [
-                    'Polígonos: Suma directa de las longitudes de todos sus lados.',
-                    'Circunferencia: P = 2 × π × r (o P = π × d, donde d es el diámetro).'
+                    'Textos Literarios: Intención estética, lenguaje embellecido, contenido ficticio o poético. Subgéneros: Narrativos (cuento, novela, fábula, leyenda, mito), Líricos (poesía, poema, oda) y Dramáticos (obras de teatro).',
+                    'Textos No Literarios: Intención informativa/práctica, lenguaje claro y objetivo. Se subclasifican en: 1) Normativos (instruyen o regulan conductas: leyes, reglamentos, manuales, recetas) y 2) Informativos (dan a conocer hechos reales: noticias, reportajes, biografías, artículos científicos).'
                 ],
                 examples: [
                     {
-                        problem: 'Calcular el perímetro de un Círculo con radio r = 5 cm (usa π ≈ 3.14).',
+                        problem: 'Un reglamento escolar que dicta las normas de convivencia es un texto:',
                         steps: [
-                            'Fórmula: P = 2 × π × r',
-                            'Sustitución: P = 2 × 3.14 × 5',
-                            'Resultado: P = 31.4 cm'
+                            'Evaluar la intención: Regula conductas mediante normas directas sin ficción.',
+                            'Clasificación: Texto No Literario del subgénero Normativo.'
                         ]
                     }
                 ]
             },
-            {
-                id: 'm3',
-                subject: 'math',
-                title: 'Triángulos y Teorema de Pitágoras',
-                summary: 'Propiedades de ángulos internos y relación de lados en triángulos rectángulos.',
-                theory: 'En todo triángulo, la suma de los ángulos internos es siempre igual a 180°. En todo triángulo rectángulo (con un ángulo de 90°), la suma de los cuadrados de los catetos es igual al cuadrado de la hipotenusa.',
-                rules: [
-                    'Suma de ángulos: α + β + γ = 180°',
-                    'Teorema de Pitágoras: a² + b² = c² (donde c es la hipotenusa)'
-                ],
-                examples: [
-                    {
-                        problem: 'Un triángulo rectángulo tiene catetos de a = 6 y b = 8. Hallar la hipotenusa c.',
-                        steps: [
-                            'c² = 6² + 8²',
-                            'c² = 36 + 64 = 100',
-                            'c = √100 = 10'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm4',
-                subject: 'math',
-                title: 'Razones Trigonométricas Básicas',
-                summary: 'Seno, Coseno y Tangente en triángulos rectángulos.',
-                theory: 'Relaciones numéricas entre las longitudes de dos lados de un triángulo rectángulo en función de uno de sus ángulos agudos (θ).',
-                rules: [
-                    'Sen(θ) = Cateto Opuesto / Hipotenusa',
-                    'Cos(θ) = Cateto Adyacente / Hipotenusa',
-                    'Tan(θ) = Cateto Opuesto / Cateto Adyacente'
-                ],
-                examples: [
-                    {
-                        problem: 'Si el cateto opuesto vale 3 y la hipotenusa vale 5, ¿cuánto vale Sen(θ)?',
-                        steps: [
-                            'Sen(θ) = 3 / 5 = 0.6'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm5',
-                subject: 'math',
-                title: 'Volumen y Superficie de Cilindros',
-                summary: 'Capacidad y área total de cuerpos redondos.',
-                theory: 'Un cilindro es un cuerpo geométrico generado por un rectángulo al girar sobre uno de sus lados.',
-                rules: [
-                    'Volumen: V = Área de la base × Altura = (π × r²) × h',
-                    'Área Lateral: AL = 2 × π × r × h'
-                ],
-                examples: [
-                    {
-                        problem: 'Un cilindro tiene r = 3 cm y h = 10 cm. Determinar su volumen en función de π.',
-                        steps: [
-                            'V = π × (3)² × 10',
-                            'V = π × 9 × 10 = 90π cm³'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm6',
-                subject: 'math',
-                title: 'Regla de Tres Directa e Inversa',
-                summary: 'Resolución de problemas de proporcionalidad.',
-                theory: 'La regla de tres permite calcular un valor desconocido relacionando tres valores conocidos.',
-                rules: [
-                    'Directa (si una variable sube, la otra sube): x = (B × C) / A',
-                    'Inversa (si una variable sube, la otra baja): x = (A × B) / C'
-                ],
-                examples: [
-                    {
-                        problem: 'Si 4 obreros construyen una barda en 12 horas, ¿cuánto tardarán 8 obreros? (Inversa)',
-                        steps: [
-                            'Relación inversa: (4 obreros × 12 horas) / 8 obreros',
-                            'x = 48 / 8 = 6 horas'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm7',
-                subject: 'math',
-                title: 'Porcentajes y Aumentos/Descuentos',
-                summary: 'Cálculo de fracciones decimales sobre una cantidad base.',
-                theory: 'Un porcentaje representa una fracción de 100.',
-                rules: [
-                    'Cantidad final con Descuento del D%: N_final = N × (1 - D/100)',
-                    'Cantidad final con Aumento del A%: N_final = N × (1 + A/100)'
-                ],
-                examples: [
-                    {
-                        problem: 'Un artículo cuesta $800 y tiene un 20% de descuento. ¿Cuál es el precio final?',
-                        steps: [
-                            'Descuento: 800 × 0.20 = $160',
-                            'Precio final: 800 - 160 = $640'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm8',
-                subject: 'math',
-                title: 'MCD y MCM',
-                summary: 'Máximo Común Divisor y Mínimo Común Múltiplo.',
-                theory: 'El MCD es el divisor más grande que comparten dos o más números. El MCM es el múltiplo más pequeño que comparten.',
-                rules: [
-                    'Descomposición simultánea en factores primos.',
-                    'MCD: Multiplica únicamente los primos que dividan a TODOS los números al mismo tiempo.',
-                    'MCM: Multiplica TODOS los factores primos hasta llevar cada número a 1.'
-                ],
-                examples: [
-                    {
-                        problem: 'Calcular el MCM de 12 y 18.',
-                        steps: [
-                            'Factores de 12: 2² × 3',
-                            'Factores de 18: 2 × 3²',
-                            'MCM = toma mayores exponentes: 2² × 3² = 4 × 9 = 36'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm9',
-                subject: 'math',
-                title: 'Jerarquía de Operaciones (PEMDAS)',
-                summary: 'Orden estricto de resolución algebraica.',
-                theory: 'Garantiza la unicidad de resultado en operaciones combinadas.',
-                rules: [
-                    '1° Paréntesis y agrupaciones',
-                    '2° Exponentes y Radicación',
-                    '3° Multiplicación y División (de izquierda a derecha)',
-                    '4° Suma y Resta (de izquierda a derecha)'
-                ],
-                examples: [
-                    {
-                        problem: 'Resolver: 5 + 3 × (8 - 2²)',
-                        steps: [
-                            'Paréntesis interno exponente: 2² = 4 -> (8 - 4) = 4',
-                            'Multiplicación: 3 × 4 = 12',
-                            'Suma final: 5 + 12 = 17'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm10',
-                subject: 'math',
-                title: 'Leyes de los Exponentes',
-                summary: 'Reglas para simplificar potencias.',
-                theory: 'Operaciones con bases elevadas a exponentes reales.',
-                rules: [
-                    'Producto: aᵐ × aⁿ = aᵐ⁺ⁿ',
-                    'Cociente: aᵐ / aⁿ = aᵐ⁻ⁿ',
-                    'Potencia de potencia: (aᵐ)ⁿ = aᵐ*ⁿ',
-                    'Exponente cero: a⁰ = 1 (a ≠ 0)',
-                    'Exponente negativo: a⁻ⁿ = 1 / aⁿ'
-                ],
-                examples: [
-                    {
-                        problem: 'Simplificar: (x³ × x⁵) / x²',
-                        steps: [
-                            'Numerador: x³⁺⁵ = x⁸',
-                            'División: x⁸ / x² = x⁸⁻² = x⁶'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm11',
-                subject: 'math',
-                title: 'Radicales y Exponentes Fraccionarios',
-                summary: 'Conversión de raíces a potencias y simplificación.',
-                theory: 'Una raíz n-ésima de una potencia equivale a un exponente fraccionario.',
-                rules: [
-                    ' Conversión: ⁿ√(aᵐ) = aᵐ/ⁿ',
-                    ' Multiplicación de raíces del mismo índice: ⁿ√a × ⁿ√b = ⁿ√(a × b)'
-                ],
-                examples: [
-                    {
-                        problem: 'Expresar √x³ en forma de exponente fraccionario.',
-                        steps: [
-                            'El índice de la raíz cuadrada es 2 y la potencia es 3.',
-                            'Resultado: x³/²'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm12',
-                subject: 'math',
-                title: 'Promedio, Media, Moda y Mediana',
-                summary: 'Medidas de tendencia central.',
-                theory: 'Estadística descriptiva básica evaluada frecuentemente en la PAA.',
-                rules: [
-                    'Promedio / Media: Suma de todos los datos dividida entre el número de datos.',
-                    'Mediana: Valor central tras ordenar los datos de menor a mayor.',
-                    'Moda: El valor que aparece con mayor frecuencia.'
-                ],
-                examples: [
-                    {
-                        problem: 'Hallar el promedio de los datos: 4, 8, 6, 10, 12.',
-                        steps: [
-                            'Suma: 4 + 8 + 6 + 10 + 12 = 40',
-                            'Número de elementos: 5',
-                            'Promedio: 40 / 5 = 8'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm13',
-                subject: 'math',
-                title: 'Ecuaciones de Primer Grado',
-                summary: 'Despeje de una incógnita lineal.',
-                theory: 'Igualdades matemáticas con una variable elevada a la primera potencia.',
-                rules: [
-                    'Lo que está sumando pasa restando.',
-                    'Lo que está multiplicando pasa dividiendo con su mismo signo.'
-                ],
-                examples: [
-                    {
-                        problem: 'Resolver: 4x - 7 = 13',
-                        steps: [
-                            '4x = 13 + 7',
-                            '4x = 20',
-                            'x = 20 / 4 = 5'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm14',
-                subject: 'math',
-                title: 'Sistemas de Ecuaciones 2x2',
-                summary: 'Métodos de Sustitución, Reducción e Igualación.',
-                theory: 'Conjunto de dos ecuaciones con dos incógnitas cuyo punto en común representa la solución.',
-                rules: [
-                    'Reducción: Sumar o restar las ecuaciones para eliminar una variable.',
-                    'Sustitución: Despejar una variable de una ecuación y colocarla en la otra.'
-                ],
-                examples: [
-                    {
-                        problem: 'Resolver x + y = 10 y x - y = 4.',
-                        steps: [
-                            'Sumamos ambas ecuaciones: (x + x) + (y - y) = 10 + 4',
-                            '2x = 14  =>  x = 7',
-                            'Sustituimos x: 7 + y = 10  =>  y = 3'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm15',
-                subject: 'math',
-                title: 'Desigualdades e Inecuaciones',
-                summary: 'Despeje con intervalos y cambio de sentido.',
-                theory: 'Expresiones que utilizan símbolos <, >, ≤, ≥.',
-                rules: [
-                    'REGLA DE ORO: Al multiplicar o dividir ambos lados por un número NEGATIVO, el sentido de la desigualdad SE INVIERTE.'
-                ],
-                examples: [
-                    {
-                        problem: 'Resolver: -3x < 12',
-                        steps: [
-                            'Dividimos entre -3 e invertimos la desigualdad:',
-                            'x > 12 / (-3)',
-                            'x > -4'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm16',
-                subject: 'math',
-                title: 'Factorización de Polinomios',
-                summary: 'Factor común, Diferencia de cuadrados y Trinometría.',
-                theory: 'Transformar una suma o resta de términos algebraicos en un producto de factores.',
-                rules: [
-                    'Factor Común: ax + ay = a(x + y)',
-                    'Diferencia de Cuadrados: a² - b² = (a - b)(a + b)',
-                    'Trinomio Cuadrado Perfecto: a² + 2ab + b² = (a + b)²'
-                ],
-                examples: [
-                    {
-                        problem: 'Factorizar: x² - 16',
-                        steps: [
-                            'Es una diferencia de cuadrados perfectos (√x² = x, √16 = 4)',
-                            'Resultado: (x - 4)(x + 4)'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm17',
-                subject: 'math',
-                title: 'Valor Numérico de una Expresión',
-                summary: 'Evaluación de funciones para un valor dado.',
-                theory: 'Sustituir las variables por números dados y resolver la aritmética resultante.',
-                rules: [
-                    'Respetar el orden de signos y jerarquía al sustituir.'
-                ],
-                examples: [
-                    {
-                        problem: 'Hallar el valor de f(x) = 2x² - 3x + 5 cuando x = -2.',
-                        steps: [
-                            'f(-2) = 2(-2)² - 3(-2) + 5',
-                            'f(-2) = 2(4) + 6 + 5',
-                            'f(-2) = 8 + 6 + 5 = 19'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm18',
-                subject: 'math',
-                title: 'Probabilidad Clásica',
-                summary: 'Cálculo de probabilidad de eventos simples.',
-                theory: 'Medida numérica de la posibilidad de que ocurra un evento.',
-                rules: [
-                    'P(A) = (Número de Casos Favorables) / (Número de Casos Posibles Totales)',
-                    'El valor siempre se encuentra entre 0 y 1 (o 0% y 100%).'
-                ],
-                examples: [
-                    {
-                        problem: '¿Cuál es la probabilidad de obtener un número mayor a 4 al lanzar un dado de 6 caras?',
-                        steps: [
-                            'Casos favorables (5 y 6): 2 casos',
-                            'Casos totales: 6',
-                            'P = 2 / 6 = 1 / 3 ≈ 33.3%'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm19',
-                subject: 'math',
-                title: 'Permutaciones (El Orden Importa)',
-                summary: 'Arreglos ordenados de elementos.',
-                theory: 'Agrupación donde sí importa la posición o el orden en que se colocan los elementos.',
-                rules: [
-                    'P(n, r) = n! / (n - r)!'
-                ],
-                examples: [
-                    {
-                        problem: 'De un grupo de 4 personas, ¿de cuántas formas se pueden otorgar 1er y 2do lugar?',
-                        steps: [
-                            'n = 4, r = 2',
-                            'P(4, 2) = 4! / (4 - 2)! = (4 × 3 × 2 × 1) / (2 × 1) = 12 formas'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm20',
-                subject: 'math',
-                title: 'Combinaciones (El Orden NO Importa)',
-                summary: 'Selección de elementos sin considerar su orden.',
-                theory: 'Selección de un subconjunto de elementos donde el orden de selección es irrelevante.',
-                rules: [
-                    'C(n, r) = n! / [r! × (n - r)!]'
-                ],
-                examples: [
-                    {
-                        problem: '¿Cuántas parejas distintas se pueden formar con 4 personas?',
-                        steps: [
-                            'n = 4, r = 2',
-                            'C(4, 2) = 4! / [2! × (4 - 2)!] = 24 / [2 × 2] = 24 / 4 = 6 combinaciones'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm21',
-                subject: 'math',
-                title: 'Distancia entre Dos Puntos',
-                summary: 'Geometría analítica en el plano cartesiano.',
-                theory: 'Longitud del segmento que une dos puntos A(x₁, y₁) y B(x₂, y₂). Derivado de Pitágoras.',
-                rules: [
-                    'd = √[ (x₂ - x₁)² + (y₂ - y₁)² ]'
-                ],
-                examples: [
-                    {
-                        problem: 'Calcular la distancia entre A(1, 2) y B(4, 6).',
-                        steps: [
-                            'd = √[ (4 - 1)² + (6 - 2)² ]',
-                            'd = √[ (3)² + (4)² ] = √[ 9 + 16 ] = √25 = 5 unidades'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm22',
-                subject: 'math',
-                title: 'Punto Medio de un Segmento',
-                summary: 'Coordenadas del centro de un segmento.',
-                theory: 'Punto exacto que divide a un segmento de recta en dos partes de igual longitud.',
-                rules: [
-                    'Pm = ( (x₁ + x₂) / 2 , (y₁ + y₂) / 2 )'
-                ],
-                examples: [
-                    {
-                        problem: 'Hallar el punto medio entre P(2, 8) y Q(6, 4).',
-                        steps: [
-                            'x_m = (2 + 6) / 2 = 8 / 2 = 4',
-                            'y_m = (8 + 4) / 2 = 12 / 2 = 6',
-                            'Punto Medio: (4, 6)'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm23',
-                subject: 'math',
-                title: 'Pendiente de una Recta (m)',
-                summary: 'Inclinación de la recta en el plano.',
-                theory: 'Razón de cambio entre la variación vertical (y) y la variación horizontal (x).',
-                rules: [
-                    'm = (y₂ - y₁) / (x₂ - x₁)'
-                ],
-                examples: [
-                    {
-                        problem: 'Hallar la pendiente de la recta que pasa por (1, 3) y (3, 7).',
-                        steps: [
-                            'm = (7 - 3) / (3 - 1) = 4 / 2 = 2'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm24',
-                subject: 'math',
-                title: 'Ecuación de la Recta (Punto-Pendiente)',
-                summary: 'Representación algebraica lineal.',
-                theory: 'Forma canónica de la recta en función de su pendiente m y su intersección con el eje Y (b).',
-                rules: [
-                    'Forma pendiente-intersección: y = mx + b',
-                    'Forma punto-pendiente: y - y₁ = m(x - x₁)'
-                ],
-                examples: [
-                    {
-                        problem: 'Escribir la ecuación de la recta con m = 3 y que pasa por (0, 5).',
-                        steps: [
-                            'Como la intersección b es 5, sustituimos directamente:',
-                            'y = 3x + 5'
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'm25',
-                subject: 'math',
-                title: 'Ecuación de la Circunferencia',
-                summary: 'Lugar geométrico con centro en el origen y fuera de él.',
-                theory: 'Todos los puntos que equidistan de un centro fijo (h, k) a una distancia constante r.',
-                rules: [
-                    'Centro en el origen (0,0): x² + y² = r²',
-                    'Centro fuera del origen (h,k): (x - h)² + (y - k)² = r²'
-                ],
-                examples: [
-                    {
-                        problem: 'Determinar el radio de la circunferencia x² + y² = 49.',
-                        steps: [
-                            'r² = 49',
-                            'r = √49 = 7'
-                        ]
-                    }
-                ]
-            },
-
-            // --- ESPAÑOL ---
             {
                 id: 's1',
                 subject: 'spanish',
@@ -916,7 +417,7 @@
                 rules: [
                     'Paso 1: Establece una oración concreta con el par base: "A es a B como..."',
                     'Paso 2: Identifica el tipo de relación (Causa-Efecto, Parte-Todo, Instrumento-Sujeto, Sinonimia/Antonimia).',
-                    'Paso 3: Aplica estrictamente el mismo orden semántico a las opciones.'
+                    'Paso 3: Aplica strictly el mismo orden semántico a las opciones.'
                 ],
                 examples: [
                     {
@@ -971,80 +472,248 @@
                 ]
             },
 
-            // --- INGLÉS ---
+            // --- MATEMÁTICAS (25 FICHAS COMPLETAS) ---
+            { id: 'm1', subject: 'math', title: 'Área de Figuras Planas', summary: 'Fórmulas para Triángulo, Cuadrado, Rectángulo y Círculo.', theory: 'El área mide la superficie encerrada por el límite de una figura bidimensional.', rules: ['Triángulo: A = (b × h) / 2', 'Cuadrado: A = L²', 'Rectángulo: A = b × h', 'Círculo: A = π × r²'], examples: [{ problem: 'Un triángulo tiene base de 12 cm y altura de 7 cm. ¿Cuál es su área?', steps: ['A = (12 × 7) / 2 = 42 cm²'] }] },
+            { id: 'm2', subject: 'math', title: 'Perímetros', summary: 'Suma de lados y longitud de circunferencia.', theory: 'El perímetro es la longitud del contorno de una figura.', rules: ['Polígonos: Suma de lados', 'Círculo: P = 2 × π × r'], examples: [{ problem: 'Perímetro de un círculo con r = 5 cm.', steps: ['P = 2 × 3.14 × 5 = 31.4 cm'] }] },
+            { id: 'm3', subject: 'math', title: 'Teorema de Pitágoras', summary: 'Relación en triángulos rectángulos.', theory: 'Suma de cuadrados de catetos es igual al cuadrado de la hipotenusa.', rules: ['a² + b² = c²'], examples: [{ problem: 'Catetos de 6 y 8. Hallar c.', steps: ['c = √(36 + 64) = √100 = 10'] }] },
+            { id: 'm4', subject: 'math', title: 'Razones Trigonométricas', summary: 'Seno, Coseno y Tangente.', theory: 'Relaciones entre lados y ángulos agudos.', rules: ['Sen = Op/Hip', 'Cos = Ady/Hip', 'Tan = Op/Ady'], examples: [{ problem: 'Opuesto = 3, Hipotenusa = 5.', steps: ['Sen = 3/5 = 0.6'] }] },
+            { id: 'm5', subject: 'math', title: 'Volumen de Cilindros', summary: 'Capacidad de cuerpos redondos.', theory: 'Área de la base por la altura.', rules: ['V = π × r² × h'], examples: [{ problem: 'r = 3, h = 10.', steps: ['V = π × 9 × 10 = 90π'] }] },
+            { id: 'm6', subject: 'math', title: 'Regla de Tres Directa e Inversa', summary: 'Proporcionalidad rápida.', theory: 'Relación entre tres valores conocidos para hallar una incógnita.', rules: ['Directa: x = (B × C) / A', 'Inversa: x = (A × B) / C'], examples: [{ problem: '4 obreros tardan 12h. ¿Cuánto tardan 8?', steps: ['x = (4 × 12) / 8 = 6h'] }] },
+            { id: 'm7', subject: 'math', title: 'Porcentajes y Descuentos', summary: 'Cálculos porcentuales.', theory: 'Representación de fracciones de 100.', rules: ['Precio final = Precio × (1 - %/100)'], examples: [{ problem: '$800 con 20% desc.', steps: ['800 × 0.80 = $640'] }] },
+            { id: 'm8', subject: 'math', title: 'MCD y MCM', summary: 'Divisores y múltiplos comunes.', theory: 'Factores primos simultáneos.', rules: ['MCD: Divisores comunes de todos', 'MCM: Múltiplo mínimo de todos'], examples: [{ problem: 'MCM de 12 y 18.', steps: ['36'] }] },
+            { id: 'm9', subject: 'math', title: 'Jerarquía Operaciones (PEMDAS)', summary: 'Orden operacional.', theory: 'Paréntesis, Exponentes, Mult/Div, Suma/Resta.', rules: ['Seguir orden estricto de izq a der.'], examples: [{ problem: '5 + 3 × (8 - 4)', steps: ['5 + 3(4) = 5 + 12 = 17'] }] },
+            { id: 'm10', subject: 'math', title: 'Leyes de Exponentes', summary: 'Simplificación de potencias.', theory: 'Manejo de bases y potencias.', rules: ['aᵐ × aⁿ = aᵐ⁺ⁿ', 'aᵐ / aⁿ = aᵐ⁻ⁿ', '(aᵐ)ⁿ = aᵐ*ⁿ'], examples: [{ problem: '(x³ × x⁵) / x²', steps: ['x⁸ / x² = x⁶'] }] },
+            { id: 'm11', subject: 'math', title: 'Radicales y Exponentes Fraccionarios', summary: 'Conversión de raíces.', theory: 'Raíz como exponente fraccionario.', rules: ['ⁿ√(aᵐ) = aᵐ/ⁿ'], examples: [{ problem: '√x³', steps: ['x³/²'] }] },
+            { id: 'm12', subject: 'math', title: 'Promedio, Media, Moda, Mediana', summary: 'Tendencia central.', theory: 'Resumen estadístico de datos.', rules: ['Promedio = Suma / N', 'Mediana = Dato central', 'Moda = Más frecuente'], examples: [{ problem: 'Datos: 4, 8, 6, 10, 12', steps: ['Suma = 40 / 5 = 8'] }] },
+            { id: 'm13', subject: 'math', title: 'Ecuaciones de 1er Grado', summary: 'Despeje lineal.', theory: 'Igualdades con una incógnita.', rules: ['Aislar la variable invirtiendo operaciones.'], examples: [{ problem: '4x - 7 = 13', steps: ['4x = 20 => x = 5'] }] },
+            { id: 'm14', subject: 'math', title: 'Sistemas de Ecuaciones 2x2', summary: 'Métodos de resolución.', theory: 'Dos ecuaciones con dos variables.', rules: ['Reducción, Sustitución e Igualación.'], examples: [{ problem: 'x + y = 10, x - y = 4', steps: ['2x = 14 => x = 7, y = 3'] }] },
+            { id: 'm15', subject: 'math', title: 'Desigualdades e Inecuaciones', summary: 'Intervalos numéricos.', theory: 'Despeje con símbolos de orden.', rules: ['Si multiplicas/divides por negativo, invierte el signo.'], examples: [{ problem: '-3x < 12', steps: ['x > -4'] }] },
+            { id: 'm16', subject: 'math', title: 'Factorización de Polinomios', summary: 'Transformación a productos.', theory: 'Expresión reducida en factores.', rules: ['Factor Común', 'Diferencia de Cuadrados: a²-b²=(a-b)(a+b)'], examples: [{ problem: 'x² - 16', steps: ['(x - 4)(x + 4)'] }] },
+            { id: 'm17', subject: 'math', title: 'Valor Numérico de Funciones', summary: 'Evaluación algebraico.', theory: 'Sustitución directa de variables.', rules: ['Respetar signos al sustituir.'], examples: [{ problem: 'f(x) = 2x² - 3x + 5 para x = -2', steps: ['2(4) + 6 + 5 = 19'] }] },
+            { id: 'm18', subject: 'math', title: 'Probabilidad Clásica', summary: 'Eventos aleatorios.', theory: 'Proporción de éxito.', rules: ['P = Favorables / Totales'], examples: [{ problem: 'Obtener >4 en dado de 6 caras', steps: ['2/6 = 1/3 ≈ 33.3%'] }] },
+            { id: 'm19', subject: 'math', title: 'Permutaciones (Orden Importa)', summary: 'Arreglos ordenados.', theory: 'Conteo de secuencias.', rules: ['P(n, r) = n! / (n - r)!'], examples: [{ problem: '1er y 2do lugar entre 4 personas', steps: ['4 × 3 = 12 formas'] }] },
+            { id: '20', subject: 'math', title: 'Combinaciones (Orden NO Importa)', summary: 'Selección de grupos.', theory: 'Subconjuntos sin jerarquía.', rules: ['C(n, r) = n! / [r!(n - r)!]'], examples: [{ problem: 'Parejas entre 4 personas', steps: ['6 combinaciones'] }] },
+            { id: 'm21', subject: 'math', title: 'Distancia entre Dos Puntos', summary: 'Plano cartesiano.', theory: 'Distancia euclidiana.', rules: ['d = √[(x₂-x₁)² + (y₂-y₁)²]'], examples: [{ problem: 'Entre (1,2) y (4,6)', steps: ['d = √(9 + 16) = √25 = 5'] }] },
+            { id: 'm22', subject: 'math', title: 'Punto Medio de un Segmento', summary: 'Centro de segmento.', theory: 'Promedio de coordenadas.', rules: ['Pm = ((x₁+x₂)/2, (y₁+y₂)/2)'], examples: [{ problem: 'Entre (2,8) y (6,4)', steps: ['(4, 6)'] }] },
+            { id: 'm23', subject: 'math', title: 'Pendiente de una Recta', summary: 'Inclinación m.', theory: 'Variación vertical sobre horizontal.', rules: ['m = (y₂ - y₁) / (x₂ - x₁)'], examples: [{ problem: 'Entre (1,3) y (3,7)', steps: ['m = 4 / 2 = 2'] }] },
+            { id: 'm24', subject: 'math', title: 'Ecuación de la Recta', summary: 'Forma canónica.', theory: 'Representación lineal.', rules: ['y = mx + b'], examples: [{ problem: 'm = 3, b = 5', steps: ['y = 3x + 5'] }] },
+            { id: 'm25', subject: 'math', title: 'Ecuación de Circunferencia', summary: 'Radio y centro.', theory: 'Lugar geométrico.', rules: ['x² + y² = r²'], examples: [{ problem: 'x² + y² = 81', steps: ['r = 9'] }] },
+
+            // --- INGLÉS (8 FICHAS EXPANDIDAS Y DETALLADAS) ---
             {
                 id: 'e1',
                 subject: 'english',
-                title: 'Verb Tenses & Agreement',
-                summary: 'Tiempos verbales y concordancia sujeto-verbo.',
-                theory: 'English grammar questions in PAA test mastery of basic to intermediate verb structures and subject-verb consistency.',
+                title: '1. Verb Tenses & Agreement',
+                summary: 'Present, Past, Future, and Perfect Tense conjugation rules.',
+                theory: 'English verb tenses specify the timing of actions. Subject-verb agreement ensures the verb matches the subject in number (singular/plural).',
                 rules: [
-                    'Present Simple: He/She/It adds -s/-es to the verb base.',
-                    'Past Simple: Used for completed actions at a specific time in the past.',
-                    'Present Perfect: Subject + have/has + Past Participle (for actions with relevance to the present).'
+                    'Present Simple: He/She/It adds -s or -es (e.g., She works).',
+                    'Past Simple: Regular verbs add -ed, irregulars change form (e.g., go -> went).',
+                    'Present Perfect: Subject + HAVE/HAS + Past Participle (e.g., They have studied).',
+                    'Past Perfect: Action finished before another past action (HAD + Past Participle).'
                 ],
-                examples: [
-                    {
-                        problem: 'Choose the correct form: "She __________ in Guadalajara for five years before moving to Mexico City."',
-                        steps: [
-                            'Action completed before another past event -> Past Perfect or Simple Past depending on context.',
-                            'Correct answer: "lived" or "had lived".'
-                        ]
-                    }
-                ]
+                examples: [{ problem: 'Choose: "She __________ in Guadalajara for 5 years before moving."', steps: ['Prior past action -> "had lived".'] }]
             },
             {
                 id: 'e2',
                 subject: 'english',
-                title: 'Conditionals (Zero, 1st, 2nd, 3rd)',
-                summary: 'Estructuras condicionales y sus reglas.',
-                theory: 'Conditionals express hypothetical scenarios and their consequences.',
+                title: '2. Conditionals (0, 1st, 2nd, 3rd)',
+                summary: 'Hypothetical situations, causes, and consequences.',
+                theory: 'Conditional sentences state a condition and a result dependent on that condition.',
                 rules: [
-                    'Zero Conditional (Facts): If + Present Simple, Present Simple.',
-                    '1st Conditional (Real Future): If + Present Simple, Will + Verb.',
-                    '2nd Conditional (Unreal Present/Future): If + Past Simple, Would + Verb.'
+                    'Zero (Facts): If + Present Simple, Present Simple.',
+                    '1st (Real Future): If + Present Simple, WILL + Base Verb.',
+                    '2nd (Unreal Present): If + Past Simple, WOULD + Base Verb.',
+                    '3rd (Unreal Past): If + Past Perfect, WOULD HAVE + Past Participle.'
                 ],
-                examples: [
-                    {
-                        problem: 'Complete: "If I __________ enough time tomorrow, I will study for the PAA test."',
-                        steps: [
-                            'First conditional structure (If + Present Simple, Will + base verb).',
-                            'Correct answer: "have".'
-                        ]
-                    }
-                ]
+                examples: [{ problem: 'Complete: "If I study hard, I __________ pass the test."', steps: ['1st conditional result -> "will".'] }]
             },
             {
                 id: 'e3',
                 subject: 'english',
-                title: 'Prepositions of Time and Place',
-                summary: 'Uso correcto de IN, ON, AT.',
-                theory: 'Mastering prepositions is vital for standard written English accuracy.',
+                title: '3. Prepositions of Time and Place',
+                summary: 'Rules for IN, ON, AT, BY, FOR, and SINCE.',
+                theory: 'Prepositions establish temporal and spatial relationships between nouns in a sentence.',
                 rules: [
-                    'IN: Months, years, centuries, enclosed spaces (In May, In 2024, In the room).',
-                    'ON: Days of the week, specific dates, surfaces (On Monday, On May 5th, On the table).',
-                    'AT: Precise times, specific locations (At 5:00 PM, At the university).'
+                    'AT: Precise times and specific locations (e.g., At 5 PM, At the station).',
+                    'ON: Days and dates (e.g., On Monday, On May 15th).',
+                    'IN: Months, years, centuries, enclosed spaces (e.g., In 2024, In June, In Mexico).',
+                    'SINCE vs FOR: SINCE + starting point (since 2010); FOR + duration (for 3 years).'
                 ],
-                examples: [
-                    {
-                        problem: 'Choose the correct preposition: "The PAA exam is scheduled __________ May 15th."',
-                        steps: [
-                            'May 15th is a specific date with a day included.',
-                            'Correct preposition: "on".'
-                        ]
-                    }
-                ]
+                examples: [{ problem: 'Choose: "The exam is __________ May 15th at 8 AM."', steps: ['Specific date -> "on".'] }]
+            },
+            {
+                id: 'e4',
+                subject: 'english',
+                title: '4. Active vs. Passive Voice',
+                summary: 'Shifting focus from the doer to the recipient of the action.',
+                theory: 'In passive voice, the object of the active sentence becomes the subject, emphasizing the action itself.',
+                rules: [
+                    'Active: Subject + Verb + Object.',
+                    'Passive Structure: Object + BE (in tense) + Past Participle + (by Subject).',
+                    'Present Passive: is/are + Past Participle.',
+                    'Past Passive: was/were + Past Participle.'
+                ],
+                examples: [{ problem: 'Passive of "The committee approved the proposal":', steps: ['"The proposal WAS APPROVED by the committee."'] }]
+            },
+            {
+                id: 'e5',
+                subject: 'english',
+                title: '5. Reported Speech & Indirect Questions',
+                summary: 'Reporting what someone else said with tense backshifting.',
+                theory: 'When reporting past statements, verb tenses shift back one step into the past.',
+                rules: [
+                    'Present Simple -> Past Simple (e.g., "I play" -> He said he played).',
+                    'Present Continuous -> Past Continuous.',
+                    'Will -> Would; Can -> Could.',
+                    'Indirect Questions: Use normal word order (Subject + Verb) without "do/does/did".'
+                ],
+                examples: [{ problem: 'Report "Where do you live?":', steps: ['"He asked me where I LIVED."'] }]
+            },
+            {
+                id: 'e6',
+                subject: 'english',
+                title: '6. Relative Clauses & Pronouns',
+                summary: 'Connecting clauses with WHO, WHOM, WHOSE, WHICH, and THAT.',
+                theory: 'Relative pronouns introduce clauses that give essential or additional information about a noun.',
+                rules: [
+                    'WHO: Refers to people (Subject position).',
+                    'WHOM: Refers to people (Object position).',
+                    'WHOSE: Indicates possession (e.g., The student WHOSE grades are top).',
+                    'WHICH / THAT: Refers to things or animals.'
+                ],
+                examples: [{ problem: 'Choose: "The author __________ book won the award was present."', steps: ['Possession -> "whose".'] }]
+            },
+            {
+                id: 'e7',
+                subject: 'english',
+                title: '7. Modal Verbs & Expressing Nuance',
+                summary: 'Must, Should, Could, Might, May, and Have to.',
+                theory: 'Modal auxiliary verbs express necessity, permission, advice, ability, or probability.',
+                rules: [
+                    'MUST / HAVE TO: Strong obligation or certainty.',
+                    'SHOULD / OUGHT TO: Advice or recommendation.',
+                    'CAN / COULD: Ability or polite permission/request.',
+                    'MIGHT / MAY: Possibility or uncertainty.'
+                ],
+                examples: [{ problem: 'Select: "You __________ wear a seatbelt while driving; it is mandatory."', steps: ['Legal obligation -> "must" or "have to".'] }]
+            },
+            {
+                id: 'e8',
+                subject: 'english',
+                title: '8. Vocabulary in Context & False Cognates',
+                summary: 'Context clues, academic vocabulary, and tricky English-Spanish words.',
+                theory: 'PAA English evaluates vocabulary comprehension through contextual inference and avoiding false cognate traps.',
+                rules: [
+                    'Actually = En realidad (NOT actualmente = currently).',
+                    'Realize = Darse cuenta (NOT realizar = carry out).',
+                    'Assist = Ayudar (NOT asistir = attend).',
+                    'Compromise = Arreglo/Acuerdo mutuo (NOT compromiso = commitment).'
+                ],
+                examples: [{ problem: 'Translate in context: "She actually passed the test."', steps: ['"Actually" means "en realidad" or "de hecho".'] }]
             }
         ];
 
-        /* ================= BANCO DE MINIJUEGOS Y REACTIVOS ================= */
+        /* ================= BANCO DE MINIJUEGOS (12 MINIJUEGOS INTERACTIVOS) ================= */
         const minigamesCatalog = [
-            // MATEMÁTICAS
+            // ESPAÑOL (4 Minijuegos)
+            {
+                id: 'g_esp_tipo',
+                subject: 'spanish',
+                title: '1. Identificador de Tipología Textual',
+                desc: 'Identifica la modalidad del discurso (Narrativo, Descriptivo, Expositivo, Argumentativo).',
+                questions: [
+                    {
+                        q: 'Un texto que responde a la pregunta "¿Cómo es algo o alguien?" destacando adjetivos es:',
+                        options: ['Descriptivo', 'Narrativo', 'Argumentativo', 'Expositivo'],
+                        correct: 0,
+                        explanation: 'El texto descriptivo detalla rasgos de personas, lugares u objetos respondiendo a "¿Cómo es?".'
+                    },
+                    {
+                        q: '¿Qué tipo de texto responde a la pregunta "¿Qué pienso?" y busca convencer al receptor?',
+                        options: ['Argumentativo', 'Expositivo', 'Narrativo', 'Descriptivo'],
+                        correct: 0,
+                        explanation: 'El texto argumentativo defiende una postura lógica o tesis para convencer al lector.'
+                    }
+                ]
+            },
+            {
+                id: 'g_esp_lit',
+                subject: 'spanish',
+                title: '2. Clasificador Literario vs. No Literario',
+                desc: 'Clasifica textos según su función estética, referencial, normativa o informativa.',
+                questions: [
+                    {
+                        q: 'Un manual de usuario que enseña a instalar un electrodoméstico es un texto:',
+                        options: ['No Literario (Normativo)', 'No Literario (Informativo)', 'Literario (Narrativo)', 'Literario (Lírico)'],
+                        correct: 0,
+                        explanation: 'Los manuales e instructivos regulan o guían una conducta (Subgénero Normativo).'
+                    },
+                    {
+                        q: '¿Cuál de los siguientes es un subgénero Literario Narrativo?',
+                        options: ['Cuento y Leyenda', 'Noticia periodística', 'Reglamento de tránsito', 'Artículo científico'],
+                        correct: 0,
+                        explanation: 'Los cuentos y leyendas son obras de ficción del género literario narrativo.'
+                    }
+                ]
+            },
+            {
+                id: 'g_esp_analog',
+                subject: 'spanish',
+                title: '3. Completar Analogías Verbales',
+                desc: 'Identifica la relación lógica equivalente entre pares de palabras.',
+                questions: [
+                    {
+                        q: 'TECLADO : COMPUTADORA ::',
+                        options: ['Volante : Automóvil', 'Libro : Hoja', 'Pintura : Pincel', 'Pantalla : Televisión'],
+                        correct: 0,
+                        explanation: 'El teclado es el periférico de control del ordenador, igual que el volante al automóvil.'
+                    },
+                    {
+                        q: 'CIRUJANO : BISTURÍ ::',
+                        options: ['Escultor : Cincel', 'Pintor : Cuadro', 'Profesor : Tiza', 'Médico : Hospital'],
+                        correct: 0,
+                        explanation: 'El cirujano utiliza el bisturí como herramienta directa, al igual que el escultor utiliza el cincel.'
+                    }
+                ]
+            },
+            {
+                id: 'g_esp_errors',
+                subject: 'spanish',
+                title: '4. Cazador de Errores Gramaticales',
+                desc: 'Detecta incorrecciones sintácticas, queísmo, dequeísmo y concordancia.',
+                questions: [
+                    {
+                        q: 'Identifica la oración redactada CORRECTAMENTE:',
+                        options: [
+                            'Hubo muchas personas en el evento de la universidad.',
+                            'Hubieron muchas personas en el evento de la universidad.',
+                            'Habían muchas personas en el evento de la universidad.',
+                            'Hubieron bastantes asistentes presentes.'
+                        ],
+                        correct: 0,
+                        explanation: 'El verbo "haber" existencial es impersonal y siempre debe ir en singular: "Hubo muchas personas".'
+                    },
+                    {
+                        q: '¿Cuál oración presenta dequeísmo?',
+                        options: [
+                            'Me opinó de que debemos entregar el trabajo mañana.',
+                            'Estoy seguro de que pasaremos el examen.',
+                            'No me cabe duda de que estudiaste bastante.',
+                            'Me alegro de que estés aquí.'
+                        ],
+                        correct: 0,
+                        explanation: 'El verbo opinar no exige "de": "Me opinó que debemos...".'
+                    }
+                ]
+            },
+
+            // MATEMÁTICAS (4 Minijuegos)
             {
                 id: 'g_math_calc',
                 subject: 'math',
-                title: 'Desafío de Cálculo Rápido',
-                desc: 'Resuelve operaciones y ecuaciones ágilmente aplicando la jerarquía de operaciones y simplificación.',
+                title: '5. Desafío de Jerarquía y Operaciones',
+                desc: 'Resuelve operaciones y ecuaciones aplicando la regla PEMDAS.',
                 questions: [
                     {
                         q: '¿Cuál es el resultado de: 12 + 4 × (6 - 2²)?',
@@ -1056,94 +725,58 @@
                         q: 'Despeja x de la ecuación: 3x - 5 = 16.',
                         options: ['x = 7', 'x = 5', 'x = 8', 'x = 6'],
                         correct: 0,
-                        explanation: '3x = 16 + 5 => 3x = 21 => x = 7.'
-                    },
-                    {
-                        q: '¿Cuál es el 15% de 240?',
-                        options: ['36', '24', '40', '30'],
-                        correct: 0,
-                        explanation: '240 × 0.15 = 36.'
+                        explanation: '3x = 21 => x = 7.'
                     }
                 ]
             },
             {
                 id: 'g_math_seq',
                 subject: 'math',
-                title: 'Secuencias y Patrones Numéricos',
-                desc: 'Encuentra el término faltante analizando el patrón de la serie numérica.',
+                title: '6. Secuencias y Patrones Numéricos',
+                desc: 'Encuentra el término faltante analizando el patrón de la serie.',
                 questions: [
                     {
                         q: '¿Qué número sigue en la serie: 3, 7, 15, 31, ___?',
                         options: ['63', '45', '60', '52'],
                         correct: 0,
-                        explanation: 'El patrón es: (anterior × 2) + 1. Entonces: (31 × 2) + 1 = 63.'
-                    },
-                    {
-                        q: 'Halla el término faltante: 2, 6, 18, 54, ___?',
-                        options: ['162', '108', '144', '120'],
-                        correct: 0,
-                        explanation: 'Cada número se multiplica por 3: 54 × 3 = 162.'
-                    }
-                ]
-            },
-
-            // ESPAÑOL
-            {
-                id: 'g_esp_analog',
-                subject: 'spanish',
-                title: 'Completar Analogías Verbales',
-                desc: 'Identifica la relación lógica equivalente entre pares de palabras.',
-                questions: [
-                    {
-                        q: 'TECLADO : COMPUTADORA ::',
-                        options: ['Volante : Automóvil', 'Libro : Hoja', 'Pintura : Pincel', 'Pantalla : Televisión'],
-                        correct: 0,
-                        explanation: 'El teclado es un periférico de entrada esencial del ordenador, así como el volante dirige el automóvil.'
-                    },
-                    {
-                        q: 'CIRUJANO : BISTURÍ ::',
-                        options: ['Escultor : Cincel', 'Pintor : Cuadro', 'Profesor : Tiza', 'Médico : Hospital'],
-                        correct: 0,
-                        explanation: 'El cirujano utiliza el bisturí como herramienta directa de trabajo, al igual que el escultor utiliza el cincel.'
+                        explanation: 'Patrón: (anterior × 2) + 1. (31 × 2) + 1 = 63.'
                     }
                 ]
             },
             {
-                id: 'g_esp_errors',
-                subject: 'spanish',
-                title: 'Cazador de Errores Gramaticales',
-                desc: 'Detecta incorrecciones sintácticas, queísmo o falta de concordancia.',
+                id: 'g_math_geo',
+                subject: 'math',
+                title: '7. Geometría y Teorema de Pitágoras',
+                desc: 'Calcula catetos, hipotenusas y áreas geométricas planas.',
                 questions: [
                     {
-                        q: 'Identifica la oración redactada CORRECTAMENTE:',
-                        options: [
-                            'Hubo muchas personas en el evento de la universidad.',
-                            'Hubieron muchas personas en el evento de la universidad.',
-                            'Habían muchas personas en el evento de la universidad.',
-                            'Hubieron bastantes asistentes presentes.'
-                        ],
+                        q: 'En un triángulo rectángulo, los catetos miden 9 cm y 12 cm. ¿Cuánto mide su hipotenusa?',
+                        options: ['15 cm', '21 cm', '18 cm', '13 cm'],
                         correct: 0,
-                        explanation: 'El verbo "haber" en sentido existencial es impersonal y siempre debe permanecer en singular: "Hubo muchas personas".'
-                    },
+                        explanation: 'c² = 9² + 12² = 81 + 144 = 225 => c = √225 = 15 cm.'
+                    }
+                ]
+            },
+            {
+                id: 'g_math_prob',
+                subject: 'math',
+                title: '8. Probabilidad y Combinatoria',
+                desc: 'Resuelve problemas de posibilidades, permutaciones y combinaciones.',
+                questions: [
                     {
-                        q: '¿Cuál oración presenta dequeísmo?',
-                        options: [
-                            'Me opinó de que debemos entregar el trabajo mañana.',
-                            'Estoy seguro de que pasaremos el examen.',
-                            'No me cabe duda de que estudiaste bastante.',
-                            'Me alegro de que estés aquí.'
-                        ],
+                        q: '¿De cuántas maneras se pueden elegir presidente y secretario en un grupo de 5 candidatos?',
+                        options: ['20', '10', '25', '12'],
                         correct: 0,
-                        explanation: 'El verbo opinar no exige la preposición "de". Lo correcto es: "Me opinó que debemos...".'
+                        explanation: 'El orden importa (Permutación): P(5, 2) = 5 × 4 = 20 maneras.'
                     }
                 ]
             },
 
-            // INGLÉS
+            // INGLÉS (4 Minijuegos)
             {
                 id: 'g_eng_verbs',
                 subject: 'english',
-                title: 'Verb Tense Challenge',
+                title: '9. Verb Tense Master',
                 desc: 'Select the correct English verb form according to the context.',
                 questions: [
                     {
@@ -1151,100 +784,74 @@
                         options: ['had finished', 'have finished', 'finishing', 'finish'],
                         correct: 0,
                         explanation: 'Past Perfect ("had finished") is required for an action completed before another past event.'
-                    },
-                    {
-                        q: 'If she __________ hard, she will pass the PAA test easily.',
-                        options: ['studies', 'studied', 'will study', 'has studied'],
-                        correct: 0,
-                        explanation: 'First Conditional: "If" clause takes Present Simple ("studies").'
                     }
                 ]
             },
             {
                 id: 'g_eng_prep',
                 subject: 'english',
-                title: 'Vocabulary & Preposition Spotter',
-                desc: 'Complete sentences using appropriate prepositions and contextual vocabulary.',
+                title: '10. Preposition & Vocabulary Spotter',
+                desc: 'Complete sentences using appropriate prepositions (IN, ON, AT).',
                 questions: [
                     {
                         q: 'The international conference will take place __________ October 24th.',
                         options: ['on', 'in', 'at', 'by'],
                         correct: 0,
-                        explanation: 'We use "ON" for specific dates (October 24th).'
-                    },
+                        explanation: 'We use "ON" for specific dates with days included.'
+                    }
+                ]
+            },
+            {
+                id: 'g_eng_cond',
+                subject: 'english',
+                title: '11. Conditionals Challenge',
+                desc: 'Test your mastery of 1st, 2nd, and 3rd conditional sentence structures.',
+                questions: [
                     {
-                        q: 'They have been researching this phenomenon __________ 2018.',
-                        options: ['since', 'for', 'during', 'from'],
+                        q: 'If I __________ enough money, I would buy a new laptop.',
+                        options: ['had', 'have', 'will have', 'would have'],
                         correct: 0,
-                        explanation: '"SINCE" is used with a specific starting point in time for Present Perfect.'
+                        explanation: 'Second conditional (Unreal present) requires Simple Past ("had") in the IF-clause.'
+                    }
+                ]
+            },
+            {
+                id: 'g_eng_pass',
+                subject: 'english',
+                title: '12. Active to Passive Converter',
+                desc: 'Transform active sentences into passive voice correctly.',
+                questions: [
+                    {
+                        q: 'Active: "The architect designed the new building." -> Passive:',
+                        options: [
+                            'The new building was designed by the architect.',
+                            'The new building is designed by the architect.',
+                            'The new building has been designed by the architect.',
+                            'The architect was designed by the building.'
+                        ],
+                        correct: 0,
+                        explanation: 'Simple Past Passive requires: WAS + Past Participle ("was designed").'
                     }
                 ]
             }
         ];
 
-        /* ================= BANCO DE PREGUNTAS DEL SIMULADOR PAA (50 REACTIVOS) ================= */
+        /* ================= BANCO DE PREGUNTAS DEL SIMULADOR PAA ================= */
         const simulatorQuestionsBank = [
-            // MATEMÁTICAS (20 preguntas)
-            { id: 1, subject: 'math', q: 'Un tinaco cilíndrico tiene un radio de 2 metros y una altura de 3 metros. ¿Cuál es su volumen total en metros cúbicos? (Usa V = π × r² × h)', options: ['12π m³', '6π m³', '18π m³', '24π m³'], correct: 0, exp: 'V = π × (2)² × 3 = π × 4 × 3 = 12π m³.' },
-            { id: 2, subject: 'math', q: 'Si 3x + 9 = 24, ¿cuál es el valor de 2x - 1?', options: ['9', '5', '10', '11'], correct: 0, exp: '3x = 15 => x = 5. Luego 2(5) - 1 = 10 - 1 = 9.' },
-            { id: 3, subject: 'math', q: 'En un triángulo rectángulo, los catetos miden 5 cm y 12 cm. ¿Cuánto mide su hipotenusa?', options: ['13 cm', '15 cm', '17 cm', '14 cm'], correct: 0, exp: 'c² = 5² + 12² = 25 + 144 = 169 => c = √169 = 13 cm.' },
-            { id: 4, subject: 'math', q: '¿Cuál es el promedio (media aritmética) de los siguientes valores: 12, 16, 20, 24, 28?', options: ['20', '18', '22', '24'], correct: 0, exp: 'Suma = 100 / 5 = 20.' },
-            { id: 5, subject: 'math', q: '¿Cuál es el resultado simplificado de (x⁴ × x⁶) / x³?', options: ['x⁷', 'x⁵', 'x⁸', 'x¹³'], correct: 0, exp: 'x⁴⁺⁶ / x³ = x¹⁰ / x³ = x¹⁰⁻³ = x⁷.' },
-            { id: 6, subject: 'math', q: 'Un abrigo cuesta $1,200. Si se aplica un descuento del 25%, ¿cuánto se pagará en total?', options: [' $900', '$950', '$850', '$1,000'], correct: 0, exp: 'Descuento: 1200 × 0.25 = 300. Precio final: 1200 - 300 = $900.' },
-            { id: 7, subject: 'math', q: '¿Cuál es el Mínimo Común Múltiplo (MCM) de 8, 12 y 15?', options: ['120', '60', '90', '180'], correct: 0, exp: 'Descomposición en primos: 8=2³, 12=2²×3, 15=3×5. MCM = 2³ × 3 × 5 = 8 × 15 = 120.' },
-            { id: 8, subject: 'math', q: '¿De cuántas maneras distintas se pueden organizar 3 libros en un estante?', options: ['6', '3', '9', '12'], correct: 0, exp: 'Permutación de 3 elementos: 3! = 3 × 2 × 1 = 6.' },
-            { id: 9, subject: 'math', q: 'Si se lanza un dado imparcial de 6 caras, ¿cuál es la probabilidad de obtener un número primo (2, 3, 5)?', options: ['1/2 (50%)', '1/3', '2/3', '1/6'], correct: 0, exp: 'Casos favorables: {2, 3, 5} = 3. Casos totales = 6. P = 3/6 = 1/2.' },
-            { id: 10, subject: 'math', q: '¿Cuál es la pendiente m de la recta que pasa por los puntos (2, 3) y (6, 11)?', options: ['2', '4', '3', '1/2'], correct: 0, exp: 'm = (11 - 3) / (6 - 2) = 8 / 4 = 2.' },
-            { id: 11, subject: 'math', q: 'Factoriza completamente la expresión: x² - 25.', options: ['(x - 5)(x + 5)', '(x - 5)²', '(x + 5)²', '(x - 25)(x + 1)'], correct: 0, exp: 'Diferencia de cuadrados perfectos: √x²=x, √25=5 => (x-5)(x+5).' },
-            { id: 12, subject: 'math', q: '¿Cuál es el valor numérico de f(x) = x² - 4x + 3 cuando x = -1?', options: ['8', '0', '6', '-2'], correct: 0, exp: 'f(-1) = (-1)² - 4(-1) + 3 = 1 + 4 + 3 = 8.' },
-            { id: 13, subject: 'math', q: 'Un carro recorre 180 km en 2 horas. A esa misma velocidad constante, ¿cuántos km recorrerá en 5 horas?', options: ['450 km', '400 km', '500 km', '360 km'], correct: 0, exp: 'Velocidad = 180 / 2 = 90 km/h. Distancia en 5 hrs = 90 × 5 = 450 km.' },
-            { id: 14, subject: 'math', q: '¿Cuál es la distancia entre el punto A(0,0) y el punto B(6,8) en el plano cartesiano?', options: ['10', '14', '12', '8'], correct: 0, exp: 'd = √[(6-0)² + (8-0)²] = √[36 + 64] = √100 = 10.' },
-            { id: 15, subject: 'math', q: 'Resolver la inecuación: 2x + 4 > 10.', options: ['x > 3', 'x < 3', 'x > 7', 'x < 7'], correct: 0, exp: '2x > 6 => x > 3.' },
-            { id: 16, subject: 'math', q: 'El área de un cuadrado es 64 cm². ¿Cuál es su perímetro?', options: ['32 cm', '16 cm', '24 cm', '64 cm'], correct: 0, exp: 'Lado = √64 = 8 cm. Perímetro = 4 × 8 = 32 cm.' },
-            { id: 17, subject: 'math', q: 'En el sistema: x + y = 12  e  x - y = 2. Hallar el valor de x.', options: ['7', '5', '8', '6'], correct: 0, exp: 'Sumando ambas ecuaciones: 2x = 14 => x = 7.' },
-            { id: 18, subject: 'math', q: '¿Qué ángulo complementa a un ángulo de 35° para sumar 90°?', options: ['55°', '145°', '65°', '45°'], correct: 0, exp: 'Ángulos complementarios suman 90°: 90 - 35 = 55°.' },
-            { id: 19, subject: 'math', q: '¿Cuál es la razón de la serie geométrica: 2, 6, 18, 54...?', options: ['3', '2', '4', '6'], correct: 0, exp: '6 / 2 = 3; 18 / 6 = 3. La razón constante es 3.' },
-            { id: 20, subject: 'math', q: '¿Cuál es el valor del radio r para la circunferencia x² + y² = 81?', options: ['9', '81', '18', '4.5'], correct: 0, exp: 'r² = 81 => r = √81 = 9.' },
-
-            // ESPAÑOL (15 preguntas)
-            { id: 21, subject: 'spanish', q: 'Selecciona la opción que exprese una analogía equivalente a "HOJA : LIBRO":', options: ['Página : Cuaderno', 'Pintura : Marco', 'Tinta : Pluma', 'Capítulo : Título'], correct: 0, exp: 'Una hoja es un elemento constitutivo que integra un libro, igual que la página al cuaderno.' },
-            { id: 22, subject: 'spanish', q: 'Elija el conector adecuado: "Avanzó con paso firme; __________, las inclemencias del tiempo complicaron la travesía."', options: ['sin embargo', 'por lo tanto', 'puesto que', 'en consecuencia'], correct: 0, exp: 'Se requiere un conector de oposición o contraste ("sin embargo").' },
-            { id: 23, subject: 'spanish', q: 'Identifique la oración que contiene un error de concordancia:', options: ['Habían demasiadas dudas en el salón.', 'Hubo muchas dudas en el salón.', 'Surgieron varias dudas durante la clase.', 'Quedaron aclaradas todas las dudas.'], correct: 0, exp: 'El verbo "haber" impersonal no debe usarse en plural ("Habían").' },
-            { id: 24, subject: 'spanish', q: '¿Qué opción muestra un pleonasmo o redundancia innecesaria?', options: ['Salió afuera inmediatamente.', 'Salió rápidamente del salón.', 'Ingresó al aula con prisa.', 'Avanzó hacia la puerta.'], correct: 0, exp: '"Salir afuera" es redundante pues la acción de salir implica dirigirse al exterior.' },
-            { id: 25, subject: 'spanish', q: 'Complete la analogía: ANTIMICROBIANO : BACTERIA ::', options: ['Fungicida : Hongo', 'Insecto : Plaguicida', 'Vacuna : Enfermedad', 'Antídoto : Paciente'], correct: 0, exp: 'Un antimicrobiano combate específicamente bacterias, igual que un fungicida a los hongos.' },
-            { id: 26, subject: 'spanish', q: 'Identifique el tono predominante en un ensayo científico que expone datos estadísticos sobre el calentamiento global sin emitir juicios de valor:', options: ['Objetivo e informativo', 'Subjetivo y emotivo', 'Persuasivo y poético', 'Crítico y satírico'], correct: 0, exp: 'Al presentar datos puros sin juicio personal, el tono es estrictamente objetivo e informativo.' },
-            { id: 27, subject: 'spanish', q: 'Elija la opción bien redactada sin queísmo ni dequeísmo:', options: ['Estoy convencido de que ganaremos el concurso.', 'Estoy convencido que ganaremos el concurso.', 'Pienso de que la prueba estuvo sencilla.', 'Opino de que debemos revisar la respuesta.'], correct: 0, exp: 'El adjetivo "convencido" rige la preposición "de": estar convencido DE algo.' },
-            { id: 28, subject: 'spanish', q: '¿Cuál es el sinónimo contextual más adecuado para la palabra "EFÍMERO"?', options: ['Pasajero', 'Eterno', 'Duradero', 'Constante'], correct: 0, exp: 'Efímero significa de muy corta duración, por tanto su sinónimo es pasajero.' },
-            { id: 29, subject: 'spanish', q: 'Identifique el antónimo directo de la palabra "UTÓPICO":', options: ['Realista', 'Quimérico', 'Ideal', 'Ficticio'], correct: 0, exp: 'Utópico se refiere a algo irrealizable o ideal; su opuesto directo es realista.' },
-            { id: 30, subject: 'spanish', q: '¿Cuál es la función principal de un conector causal como "ya que" o "puesto que"?', options: ['Explicar el motivo o razón de una afirmación previa.', 'Introducir una objeción a la idea anterior.', 'Ordenar cronológicamente los acontecimientos.', 'Añadir elementos en una lista enumeration.'], correct: 0, exp: 'Los conectores causales justifican la causa o motivo de lo expresado.' },
-            { id: 31, subject: 'spanish', q: 'Seleccione la opción con acentuación ortográfica correcta:', options: ['El examen de admisión fue muy ágil.', 'El exámen de admision fue muy agil.', 'El examén de admisión fue muy ágil.', 'El examen de admisión fué muy ágil.'], correct: 0, exp: '"Examen" no lleva tilde por ser llana terminada en n; "admisión" es aguda terminada en n; "ágil" es llana terminada en l.' },
-            { id: 32, subject: 'spanish', q: 'En el enunciado: "La arquitectura colonial de la ciudad atrae a miles de turistas cada año." ¿Cuál es el sujeto sintáctico?', options: ['La arquitectura colonial de la ciudad', 'miles de turistas', 'atrae', 'cada año'], correct: 0, exp: 'El sujeto que realiza la acción de atraer es "La arquitectura colonial de la ciudad".' },
-            { id: 33, subject: 'spanish', q: '¿Qué figura retórica se observa en: "El murmullo del río era una melodía que tranquilizaba su espíritu"?', options: ['Metáfora', 'Hipérbole', 'Pleonasmo', 'Onomatopeya'], correct: 0, exp: 'Se equipara directamente el murmullo del río con una melodía sin usar "como" (Metáfora).' },
-            { id: 34, subject: 'spanish', q: 'Identifique la oración que presenta un error gramatical de dequeísmo:', options: ['Ella piensa de que la junta terminará temprano.', 'Ella está segura de que la junta terminará temprano.', 'Ella se acordó de que debía entregar la tarea.', 'Ella se cercioró de que la puerta estuviera cerrada.'], correct: 0, exp: 'El verbo "pensar" no requiere "de": "Ella piensa que...".' },
-            { id: 35, subject: 'spanish', q: 'Complete: "No asistió a la clase de regularización __________ estuvo enfermo, __________ envió sus tareas a tiempo."', options: ['porque - pero', 'sin embargo - ya que', 'por lo tanto - aunque', 'no obstante - porque'], correct: 0, exp: 'Primero se da la causa ("porque estuvo enfermo") y luego la oposición ("pero envió sus tareas").' },
-
-            // INGLÉS (15 preguntas)
-            { id: 36, subject: 'english', q: 'Choose the correct form to complete: "By the time the bell rang, the teacher __________ the exam papers."', options: ['had already collected', 'has already collected', 'is collecting', 'collects'], correct: 0, exp: 'Past Perfect is used for an action completed prior to another past time ("rang").' },
-            { id: 37, subject: 'english', q: 'Complete: "If you __________ water to 100°C, it boils."', options: ['heat', 'will heat', 'heated', 'would heat'], correct: 0, exp: 'Zero conditional for scientific facts uses Present Simple in both clauses.' },
-            { id: 38, subject: 'english', q: 'Choose the correct preposition: "The international scientific conference starts __________ 9:00 AM."', options: ['at', 'on', 'in', 'by'], correct: 0, exp: 'We use "AT" for specific clock times.' },
-            { id: 39, subject: 'english', q: 'Select the sentence with the correct grammar structure:', options: ['She has lived in Guadalajara since 2015.', 'She is living in Guadalajara since 2015.', 'She lived in Guadalajara since 2015.', 'She lives in Guadalajara since 2015.'], correct: 0, exp: 'Present Perfect + "since" is used for actions starting in the past and continuing to the present.' },
-            { id: 40, subject: 'english', q: 'What is the correct passive voice of: "The committee approved the new academic proposal"?', options: ['The new academic proposal was approved by the committee.', 'The new academic proposal is approved by the committee.', 'The new academic proposal has been approved by the committee.', 'The new academic proposal approved the committee.'], correct: 0, exp: 'Simple Past Passive: Subject + was/were + Past Participle.' },
-            { id: 41, subject: 'english', q: 'Choose the correct comparative form: "This math problem is __________ than the previous one."', options: ['more difficult', 'difficult2er', 'most difficult', 'as difficult'], correct: 0, exp: 'Adjectives with 3+ syllables use "more" for comparatives.' },
-            { id: 42, subject: 'english', q: 'Complete: "I haven\'t seen my high school friends __________ a long time."', options: ['for', 'since', 'during', 'while'], correct: 0, exp: '"FOR" is used to express duration or period of time.' },
-            { id: 43, subject: 'english', q: 'Identify the correct relative pronoun: "The student __________ score was the highest received a scholarship."', options: ['whose', 'who', 'which', 'whom'], correct: 0, exp: '"Whose" indicates possession ("whose score").' },
-            { id: 44, subject: 'english', q: 'Choose the correct option: "She promised she __________ us as soon as she arrived."', options: ['would call', 'will call', 'calls', 'is calling'], correct: 0, exp: 'Reported promise in past context uses "would".' },
-            { id: 45, subject: 'english', q: 'Complete: "Neither the professor nor the students __________ aware of the schedule change."', options: ['were', 'was', 'is', 'has been'], correct: 0, exp: 'With "neither... nor", verb agrees with the closer subject ("students" -> plural "were").' },
-            { id: 46, subject: 'english', q: 'What is the opposite of the word "INCREASE"?', options: ['Decrease', 'Expand', 'Enhance', 'Escalate'], correct: 0, exp: '"Decrease" means to make or become smaller.' },
-            { id: 47, subject: 'english', q: 'Choose the word that best fits: "Although it was raining heavily, they decided to __________ with the outdoor ceremony."', options: ['proceed', 'cancel', 'postpone', 'prevent'], correct: 0, exp: '"Proceed" means to carry on or continue as planned despite the rain.' },
-            { id: 48, subject: 'english', q: 'Complete: "Would you mind __________ the window? It is getting cold."', options: ['closing', 'to close', 'close', 'closed'], correct: 0, exp: '"Would you mind" is followed by a gerund (-ing form).' },
-            { id: 49, subject: 'english', q: 'Select the correct sentence:', options: ['Hardly had I entered the room when the phone rang.', 'Hardly I had entered the room when the phone rang.', 'Hardly enter I the room when phone rang.', 'Hardly I entered the room phone rang.'], correct: 0, exp: 'Inversion occurs after negative adverbials like "Hardly had I...".' },
-            { id: 50, subject: 'english', q: 'Choose the correct meaning of "ESSENTIAL":', options: ['Crucial or extremely important', 'Optional and unnecessary', 'Secondary or minor', 'Temporary'], correct: 0, exp: 'Essential means absolutely necessary or vital.' }
+            { id: 1, subject: 'spanish', q: '¿Qué tipo de texto tiene como propósito principal explicar de forma objetiva conceptos sin emitir juicios de valor?', options: ['Texto Expositivo', 'Texto Argumentativo', 'Texto Narrativo', 'Texto Descriptivo'], correct: 0, exp: 'El texto expositivo transmite conocimientos de forma transparente y objetiva.' },
+            { id: 2, subject: 'spanish', q: 'Un fragmento que relata una sucesión cronológica de eventos vividos por personajes pertenece al modelo:', options: ['Narrativo', 'Argumentativo', 'Descriptivo', 'Expositivo'], correct: 0, exp: 'La narración se caracteriza por relatar acciones en una secuencia temporal.' },
+            { id: 3, subject: 'spanish', q: '¿A qué subgénero No Literario pertenecen las noticias y reportajes periodísticos?', options: ['Informativo', 'Normativo', 'Narrativo', 'Lírico'], correct: 0, exp: 'Las noticias transmiten hechos reales de forma objetiva (Subgénero Informativo).' },
+            { id: 4, subject: 'spanish', q: 'Un reglamento que establece las obligaciones de los ciudadanos es un texto:', options: ['No Literario Normativo', 'No Literario Informativo', 'Literario Dramático', 'Literario Narrativo'], correct: 0, exp: 'Los reglamentos establecen normas y reglas de conducta (Normativos).' },
+            { id: 5, subject: 'math', q: 'Un tinaco cilíndrico tiene un radio de 2 metros y una altura de 3 metros. ¿Cuál es su volumen total en metros cúbicos? (Usa V = π × r² × h)', options: ['12π m³', '6π m³', '18π m³', '24π m³'], correct: 0, exp: 'V = π × (2)² × 3 = π × 4 × 3 = 12π m³.' },
+            { id: 6, subject: 'math', q: 'Si 3x + 9 = 24, ¿cuál es el valor de 2x - 1?', options: ['9', '5', '10', '11'], correct: 0, exp: '3x = 15 => x = 5. Luego 2(5) - 1 = 10 - 1 = 9.' },
+            { id: 7, subject: 'english', q: 'Choose the correct form to complete: "By the time the bell rang, the teacher __________ the exam papers."', options: ['had already collected', 'has already collected', 'is collecting', 'collects'], correct: 0, exp: 'Past Perfect is used for an action completed prior to another past time ("rang").' },
+            { id: 8, subject: 'english', q: 'Identify the correct preposition: "The exam will be held __________ May 15th."', options: ['on', 'in', 'at', 'by'], correct: 0, exp: 'Use "ON" for specific dates.' }
         ];
 
         /* ================= ESTADO DE LA APLICACIÓN ================= */
         let currentTab = 'library';
-        let currentLibrarySubject = 'math';
-        let currentGameSubjectFilter = 'all';
+        let currentLibrarySubject = 'spanish';
+        let currentGameSubjectFilter = 'spanish';
 
         // Estado Minijuego
         let activeGameObj = null;
@@ -1261,15 +868,14 @@
         let simUserAnswers = [];
         let simCurrentIndex = 0;
         let simTimerInterval = null;
-        let simTimeLeftSeconds = 45 * 60; // 45 Minutos
+        let simTimeLeftSeconds = 45 * 60;
 
         /* ================= INICIALIZACIÓN ================= */
         window.onload = function() {
-            renderLibraryCards();
+            filterLibrary('spanish');
             renderMinigamesGrid();
         };
 
-        // Algoritmo de Aleatoriedad (Fisher-Yates Shuffle)
         function shuffleArray(array) {
             let shuffled = [...array];
             for (let i = shuffled.length - 1; i > 0; i--) {
@@ -1307,10 +913,12 @@
             currentLibrarySubject = subject;
             ['math', 'spanish', 'english'].forEach(s => {
                 const btn = document.getElementById(`lib-filter-${s}`);
-                if (s === subject) {
-                    btn.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-white bg-brand-600';
-                } else {
-                    btn.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-gray-400 hover:text-white';
+                if (btn) {
+                    if (s === subject) {
+                        btn.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-white bg-brand-600';
+                    } else {
+                        btn.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-gray-400 hover:text-white';
+                    }
                 }
             });
             renderLibraryCards();
@@ -1395,10 +1003,12 @@
             currentGameSubjectFilter = subject;
             ['math', 'spanish', 'english', 'all'].forEach(s => {
                 const btn = document.getElementById(`game-filter-${s}`);
-                if (s === subject) {
-                    btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white border border-brand-400';
-                } else {
-                    btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500';
+                if (btn) {
+                    if (s === subject) {
+                        btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white border border-brand-400';
+                    } else {
+                        btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-900/50 text-gray-300 border border-brand-700/50 hover:border-brand-500';
+                    }
                 }
             });
             renderMinigamesGrid();
@@ -1447,7 +1057,6 @@
             document.getElementById('game-materia-tag').innerText = activeGameObj.subject === 'math' ? 'Matemáticas' : (activeGameObj.subject === 'spanish' ? 'Español' : 'Inglés');
             document.getElementById('game-description').innerText = activeGameObj.desc;
 
-            // Reset cajas
             document.getElementById('game-config-box').classList.remove('hidden');
             document.getElementById('game-play-box').classList.add('hidden');
             document.getElementById('game-results-box').classList.add('hidden');
@@ -1463,7 +1072,6 @@
             const timerOpt = document.querySelector('input[name="game-timer-opt"]:checked').value;
             isTimedGame = timerOpt === 'timed';
 
-            // Aleatorizar preguntas
             gameQuestionsQueue = shuffleArray(activeGameObj.questions);
             gameCurrentIndex = 0;
             gameScore = 0;
@@ -1490,7 +1098,6 @@
             document.getElementById('game-progress-indicator').innerText = `Pregunta ${gameCurrentIndex + 1} de ${gameQuestionsQueue.length}`;
             document.getElementById('game-score-count').innerText = `Puntaje: ${gameScore}`;
 
-            // Configurar Tiempo
             const timerDisplay = document.getElementById('game-timer-display');
             if (isTimedGame) {
                 timerDisplay.classList.remove('hidden');
@@ -1501,17 +1108,14 @@
                     timerDisplay.innerText = `Tiempo: ${gameTimeLeft}s`;
                     if (gameTimeLeft <= 0) {
                         clearInterval(gameTimerInterval);
-                        handleGameAnswer(-1); // Tiempo agotado
+                        handleGameAnswer(-1);
                     }
                 }, 1000);
             } else {
                 timerDisplay.classList.add('hidden');
             }
 
-            // Renderizar Opciones Mezcladas
             const container = document.getElementById('game-interactive-container');
-            
-            // Mapeo para no perder índice correcto tras shuffle de opciones
             let optionsWithIndices = currentQ.options.map((opt, i) => ({ text: opt, isCorrect: i === currentQ.correct }));
             optionsWithIndices = shuffleArray(optionsWithIndices);
 
@@ -1530,7 +1134,6 @@
         function handleGameAnswer(isCorrect) {
             clearInterval(gameTimerInterval);
 
-            // Deshabilitar botones de opción
             const btns = document.querySelectorAll('.game-opt-btn');
             btns.forEach(b => {
                 b.disabled = true;
@@ -1576,7 +1179,6 @@
         function startSimulator() {
             simMode = document.getElementById('sim-mode-select').value;
             
-            // Filtrar preguntas por modalidad
             if (simMode === 'full') {
                 simQuestions = shuffleArray(simulatorQuestionsBank);
             } else {
@@ -1585,7 +1187,7 @@
 
             simUserAnswers = new Array(simQuestions.length).fill(null);
             simCurrentIndex = 0;
-            simTimeLeftSeconds = 45 * 60; // 45 Minutos
+            simTimeLeftSeconds = 45 * 60;
 
             document.getElementById('sim-start-panel').classList.add('hidden');
             document.getElementById('sim-results-panel').classList.add('hidden');
@@ -1593,7 +1195,6 @@
 
             document.getElementById('sim-total-count-text').innerText = simQuestions.length;
 
-            // Iniciar Cronómetro Global
             clearInterval(simTimerInterval);
             updateSimTimerDisplay();
             simTimerInterval = setInterval(() => {
@@ -1643,7 +1244,6 @@
                 container.appendChild(btn);
             });
 
-            // Botones de Navegación
             document.getElementById('sim-prev-btn').disabled = simCurrentIndex === 0;
             document.getElementById('sim-prev-btn').style.opacity = simCurrentIndex === 0 ? '0.4' : '1';
             
@@ -1723,7 +1323,6 @@
             let percent = Math.round((score / simQuestions.length) * 100);
             document.getElementById('sim-score-percent').innerText = `${percent}%`;
 
-            // Renderizar Lista de Revisión Paso a Paso
             const reviewList = document.getElementById('sim-review-list');
             reviewList.innerHTML = '';
 
